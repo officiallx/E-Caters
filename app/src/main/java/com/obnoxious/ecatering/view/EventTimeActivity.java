@@ -35,7 +35,7 @@
         //List<Event> events;
         Event event = new Event();
         //private final String baseUrl = "http://192.168.100.24:8080/";
-        //EventTime eventTime = new EventTime();
+        //FoodItem eventTime = new FoodItem();
         TextView txtDate, txtTime, txtDateChoose, txtTimeChoose, txt_head;
         Calendar c;
         DatePickerDialog datePickerDialog;
@@ -120,7 +120,7 @@
                 startActivity(i);
                 //Toast.makeText(getApplicationContext(),"Save Successful", Toast.LENGTH_SHORT).show();
 
-                //saveEventTime(); // EventTime ko id null bhayera save ta huncha tara error aairacha.
+                //saveEventTime(); // FoodItem ko id null bhayera save ta huncha tara error aairacha.
             }
         });
     }
@@ -155,10 +155,10 @@
 //                    .build();
 //
 //            final EventTimeService eventTimeService = retrofit.create(EventTimeService.class);
-//            Call<EventTime> lists = eventTimeService.saveEventTime(eventTime);
-//            lists.enqueue(new Callback<EventTime>() {
+//            Call<FoodItem> lists = eventTimeService.saveEventTime(eventTime);
+//            lists.enqueue(new Callback<FoodItem>() {
 //                @Override
-//                public void onResponse(Call<EventTime> call, Response<EventTime> response) {
+//                public void onResponse(Call<FoodItem> call, Response<FoodItem> response) {
 //                    if (response.isSuccessful()) {
 //                        Intent i = new Intent(EventTimeActivity.this, EventDashboardActivity.class);
 //                        startActivity(i);
@@ -167,7 +167,7 @@
 //                }
 //
 //                @Override
-//                public void onFailure(Call<EventTime> call, Throwable t) {
+//                public void onFailure(Call<FoodItem> call, Throwable t) {
 //                    Log.d("Menu", "onFailure: "+t.getMessage());
 //                    Toast.makeText(getApplicationContext(),"Check your internet", Toast.LENGTH_SHORT).show();
 //                }

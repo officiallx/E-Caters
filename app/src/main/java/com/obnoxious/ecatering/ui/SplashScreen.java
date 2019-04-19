@@ -1,4 +1,4 @@
-package com.obnoxious.ecatering.view;
+package com.obnoxious.ecatering.ui;
 
 import android.content.Intent;
 import android.graphics.Color;

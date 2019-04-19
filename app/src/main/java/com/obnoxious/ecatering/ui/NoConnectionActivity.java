@@ -1,4 +1,4 @@
-package com.obnoxious.ecatering.view;
+package com.obnoxious.ecatering.ui;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.obnoxious.ecatering.R;
+import com.obnoxious.ecatering.view.EventActivity;
 
 public class NoConnectionActivity extends AppCompatActivity {
 

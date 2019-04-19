@@ -1,20 +1,14 @@
 package com.obnoxious.ecatering.view;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +18,7 @@ import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.fragments.HomeFragment;
 import com.obnoxious.ecatering.fragments.OrderFragment;
 import com.obnoxious.ecatering.fragments.SettingFragment;
+import com.obnoxious.ecatering.ui.NoConnectionActivity;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -100,7 +95,6 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void run() {
                 doubleBackToExitPressedOnce=false;
-                finish();
             }
         }, 2000);
     }

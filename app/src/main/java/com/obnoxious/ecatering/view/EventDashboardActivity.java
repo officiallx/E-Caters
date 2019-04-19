@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,6 +45,12 @@ public class EventDashboardActivity extends AppCompatActivity implements ClickLi
         if (result.contains("Birthday")) {
             imageView4.setImageResource(R.drawable.birthday);
         }
+        else if (result.contains("Party")) {
+            imageView4.setImageResource(R.drawable.gathering);
+        }
+        else if (result.contains("Funeral")) {
+            imageView4.setImageResource(R.drawable.funeral);
+        }
 
         //back button on action bar
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,7 +84,13 @@ public class EventDashboardActivity extends AppCompatActivity implements ClickLi
     public void itemClicked(View view, int position) {
 
         if (position == 0){
-            Intent i = new Intent(EventDashboardActivity.this, FoodMenu.class);
+            Intent i = new Intent(EventDashboardActivity.this, FoodMenuActivity.class);
+            i.putExtra("FOOD_ID",position);
+            startActivity(i);
+        }
+        else if (position == 1){
+            Intent i = new Intent(EventDashboardActivity.this, DrinksMenuActivity.class);
+            i.putExtra("FOOD_ID",position);
             startActivity(i);
         }
 

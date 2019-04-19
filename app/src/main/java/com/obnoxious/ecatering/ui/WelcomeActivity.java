@@ -1,4 +1,4 @@
-package com.obnoxious.ecatering.view;
+package com.obnoxious.ecatering.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.adapters.MyPagerAdapter;
+import com.obnoxious.ecatering.view.EventActivity;
+
 public class WelcomeActivity extends AppCompatActivity {
 
     private ViewPager viewPager;

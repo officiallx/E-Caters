@@ -1,8 +1,6 @@
 package com.obnoxious.ecatering.fragments;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -26,7 +24,7 @@ import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.adapters.HomeAdapter;
 import com.obnoxious.ecatering.models.Event;
 import com.obnoxious.ecatering.services.EventService;
-import com.obnoxious.ecatering.view.NoConnectionActivity;
+import com.obnoxious.ecatering.ui.NoConnectionActivity;
 
 import java.util.ArrayList;
 import java.util.List;

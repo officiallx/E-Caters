@@ -36,30 +36,44 @@
             android:layout_height="100dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="9dp"
+            android:layout_marginRight="9dp"
             android:src="@drawable/ecaterlogo" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/food_package_guests"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/menuName"
             android:layout_alignStart="@+id/menuName"
             android:layout_below="@+id/menuName"
+            android:layout_marginTop="6dp"
             android:text="Rs. 500 per guest" />
 
         <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
+            android:id="@+id/food_description"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView7"
-            android:layout_alignStart="@+id/textView7"
-            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/food_package_guests"
+            android:layout_alignStart="@+id/food_package_guests"
+            android:layout_below="@+id/food_package_guests"
+            android:layout_marginTop="8dp"
             android:text="Small Description of the package" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:rating="3.5"
+            android:stepSize="0.5"
+            android:numStars="5"
+            android:layout_alignLeft="@+id/food_description"
+            android:layout_alignStart="@+id/food_description"
+            android:layout_below="@+id/food_description"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
 
     </RelativeLayout>
 

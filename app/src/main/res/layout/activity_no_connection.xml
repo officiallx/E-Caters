@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.obnoxious.ecatering.view.NoConnectionActivity">
+    tools:context="com.obnoxious.ecatering.ui.NoConnectionActivity">
 
     <Button
         android:id="@+id/btn_retry"

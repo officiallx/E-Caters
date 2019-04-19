@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.SplashScreen">
+        <activity android:name=".ui.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,11 +24,12 @@
         <activity
             android:name=".view.EventActivity"
             android:label="@string/app_name" />
-        <activity android:name=".view.WelcomeActivity" />
+        <activity android:name=".ui.WelcomeActivity" />
         <activity android:name=".view.EventTimeActivity" />
         <activity android:name=".view.EventDashboardActivity" />
-        <activity android:name=".view.NoConnectionActivity" />
-        <activity android:name=".view.FoodMenu"></activity>
+        <activity android:name=".ui.NoConnectionActivity" />
+        <activity android:name=".view.FoodMenuActivity" />
+        <activity android:name=".view.DrinksMenuActivity"></activity>
     </application>
 
 </manifest>
