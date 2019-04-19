@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ECatering</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="your_latest_updates_will_be_here">Your latest updates will be here</string>
+    <string name="hosting_a_new_event_soon_let_us_know">Hosting a new event soon? Let us know.</string>
+    <string name="internet_message">Check your internet connection to continue</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+</resources>
