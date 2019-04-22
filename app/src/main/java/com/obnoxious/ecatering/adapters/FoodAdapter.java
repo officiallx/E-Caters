@@ -16,6 +16,7 @@ import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.models.Event;
 import com.obnoxious.ecatering.models.FoodItem;
 import com.obnoxious.ecatering.view.EventTimeActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
     List<FoodItem> foodItems;
     FoodItem foodItem = new FoodItem();
     Context c;
+    String photoPath;
 
     public class HomeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -50,12 +52,18 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
         }
 
         public void bindMenu(FoodItem foodItem){
-            String menuName = foodItem.getItemName();
-            String description = foodItem.getItemDescription();
-            String guests = foodItem.getItemGuests();
+            String menuName = foodItem.getPackageType();
+            String description = foodItem.getPackageDescription();
+            String guests = foodItem.getPackagePrice();
             mName.setText(menuName);
             food_description.setText(description);
-            food_package_guests.setText(guests + " Guests");
+            food_package_guests.setText("Rs. "+guests);
+
+            photoPath = (foodItem.getProfilePath());
+
+            Picasso.get().load(photoPath)
+                    .fit()
+                    .into(mImageView);
         }
 
         @Override

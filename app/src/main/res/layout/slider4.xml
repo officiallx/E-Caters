@@ -21,6 +21,7 @@
         android:textColor="@android:color/white"
         android:textSize="30dp"
         android:textStyle="bold"
+        android:fontFamily="@font/caviar"
         tools:text="Packages" />
 
     <TextView
@@ -29,7 +30,7 @@
         android:layout_marginTop="10dp"
         android:text="Selectable packages for any occassions"
         android:textAlignment="center"
-        android:fontFamily="cursive"
+        android:fontFamily="@font/caviar"
         android:textColor="@android:color/white"
         android:textSize="20dp" />
 

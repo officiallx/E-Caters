@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.models.Event;
 import com.obnoxious.ecatering.view.EventTimeActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     List<Event> events;
     Event event = new Event();
     Context c;
+    String photoPath;
 
     public class HomeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -45,8 +47,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         }
 
         public void bindMenu(Event menu){
+
             String menuName = menu.getEventName();
             mName.setText(menuName);
+
+            photoPath = (menu.getProfilePath());
+            Log.d("photopth", "bindMenu: "+photoPath);
+
+            Picasso.get().load(photoPath)
+                    .fit()
+                    .into(mImageView);
         }
 
         @Override
@@ -77,21 +87,25 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 if(position == 0){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Wedding");
+                    //i.putExtra("POSITION",position);
                     c.startActivity(i);
                 }
                 if(position == 1){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Birthday");
+                    //i.putExtra("POSITION",position);
                     c.startActivity(i);
                 }
                 if(position == 2){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Party");
+                    //i.putExtra("POSITION",position);
                     c.startActivity(i);
                 }
                 if(position == 3){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Funeral");
+                    //i.putExtra("POSITION",position);
                     c.startActivity(i);
                 }
                 Log.d("position", "onClick: "+ events.get(position));

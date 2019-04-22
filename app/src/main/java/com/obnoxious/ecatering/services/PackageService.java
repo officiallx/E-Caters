@@ -13,10 +13,10 @@ import retrofit2.http.Query;
  * Created by Bleeding Rain on 4/19/2019.
  */
 
-public interface FoodService {
+public interface PackageService {
 
-    @GET("api/menu/{menuId}/items")
+    @GET("api/event/{eventId}/packages")
     Call<List<FoodItem>> getAllMenu(
-            @Path("menuId") Long menuId
+            @Path("eventId") Long eventId
     );
 }

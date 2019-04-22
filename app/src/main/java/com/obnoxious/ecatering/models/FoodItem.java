@@ -1,68 +1,75 @@
 package com.obnoxious.ecatering.models;
 
-/**
- * Created by Bleeding Rain on 4/19/2019.
- */
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class FoodItem {
 
-    @SerializedName("itemId")
+    @SerializedName("packageId")
     @Expose
-    private Integer itemId;
-    @SerializedName("itemName")
+    private Integer packageId;
+    @SerializedName("packageType")
     @Expose
-    private String itemName;
-    @SerializedName("itemDescription")
+    private String packageType;
+    @SerializedName("packageDescription")
     @Expose
-    private String itemDescription;
-    @SerializedName("itemGuests")
+    private String packageDescription;
+    @SerializedName("packagePrice")
     @Expose
-    private String itemGuests;
-    @SerializedName("menu")
+    private String packagePrice;
+    @SerializedName("profilePath")
     @Expose
-    private Menu menu;
+    private String profilePath;
+    @SerializedName("event")
+    @Expose
+    private Event event;
 
-    public Integer getItemId() {
-        return itemId;
+    public Integer getPackageId() {
+        return packageId;
     }
 
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
+    public void setPackageId(Integer packageId) {
+        this.packageId = packageId;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getPackageType() {
+        return packageType;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setPackageType(String packageType) {
+        this.packageType = packageType;
     }
 
-    public String getItemDescription() {
-        return itemDescription;
+    public String getPackageDescription() {
+        return packageDescription;
     }
 
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
+    public void setPackageDescription(String packageDescription) {
+        this.packageDescription = packageDescription;
     }
 
-    public String getItemGuests() {
-        return itemGuests;
+    public String getPackagePrice() {
+        return packagePrice;
     }
 
-    public void setItemGuests(String itemGuests) {
-        this.itemGuests = itemGuests;
+    public void setPackagePrice(String packagePrice) {
+        this.packagePrice = packagePrice;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public String getProfilePath() {
+        return profilePath;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
+    public void setProfilePath(String profilePath) {
+        this.profilePath = profilePath;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
 }

@@ -154,37 +154,17 @@ public class HomeFragment extends Fragment {
                         events = response.body();
                         mAdapter = new HomeAdapter(events);
                         mRecyclerView.setAdapter(mAdapter);
-                        Log.d("Menu", "onResponse: " + events);
+                        Log.d("Events", "onResponse: " + events);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<Event>> call, Throwable t) {
-                    Log.d("Menu", "onFailure: " + t.getMessage());
+                    Log.d("Events", "onFailure: " + t.getMessage());
                     //Toast.makeText(c, "Failed to Load", Toast.LENGTH_SHORT).show();
                 }
             });
         }
-
-    //Alert dialog if no internet connection is available
-//    public void checkNetworkConnection(){
-//        AlertDialog.Builder builder =new AlertDialog.Builder(this.getActivity());
-//        builder.setTitle("No internet Connection");
-//        builder.setMessage(R.string.internet_message);
-//        builder.setNegativeButton("retry", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                if(isNetworkConnectionAvailable()){
-//                    getAllEvents();
-//                }
-//                else {
-//                    checkNetworkConnection();
-//                }
-//            }
-//        });
-//        AlertDialog alertDialog = builder.create();
-//        alertDialog.show();
-//    }
 
     //checks if internet connection is available or not
     public boolean isNetworkConnectionAvailable(){

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,21 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.liuguangqiang.swipeback.SwipeBackActivity;
 import com.liuguangqiang.swipeback.SwipeBackLayout;
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.adapters.FoodAdapter;
-import com.obnoxious.ecatering.adapters.HomeAdapter;
-import com.obnoxious.ecatering.models.Event;
-import com.obnoxious.ecatering.models.EventItem;
 import com.obnoxious.ecatering.models.FoodItem;
-import com.obnoxious.ecatering.services.EventService;
-import com.obnoxious.ecatering.services.FoodService;
+import com.obnoxious.ecatering.services.PackageService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +29,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FoodMenuActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener{
+public class WeddingPackageActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener{
 
     private final String baseUrl = "http://192.168.100.24:8080/"; // base url to connect to server
     FoodAdapter mAdapter;
@@ -48,10 +40,14 @@ public class FoodMenuActivity extends AppCompatActivity implements SwipeBackLayo
     TextView toolbar_title, txtFoodPackage;
     Intent intent = new Intent();
     List<FoodItem> foods = new ArrayList<>();
+    String result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_menu);
+        setContentView(R.layout.activity_wedding_package);
+
+        Intent intent = getIntent();
+        result = intent.getStringExtra("EXTRA_MESSAGE");
 
         mRecyclerView = findViewById(R.id.rv_food_menu);
         mRecyclerView.setHasFixedSize(true);
@@ -70,7 +66,7 @@ public class FoodMenuActivity extends AppCompatActivity implements SwipeBackLayo
         setSupportActionBar(toolbar);
         //set title to toolbar
         toolbar_title = findViewById(R.id.toolbar_title);
-        toolbar_title.setText("Food Menu");
+        toolbar_title.setText(result+" Package");
 
         txtFoodPackage = findViewById(R.id.textView7);
 
@@ -115,7 +111,7 @@ public class FoodMenuActivity extends AppCompatActivity implements SwipeBackLayo
     //this is where it connects to the api
     public void getAllItems(){
 
-        int foodId = intent.getIntExtra("FOOD_ID",1);
+        int foodId = intent.getIntExtra("POSITION",1);
         Long fId = (long) foodId;
 
         final Retrofit retrofit = new Retrofit.Builder()
@@ -123,8 +119,8 @@ public class FoodMenuActivity extends AppCompatActivity implements SwipeBackLayo
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        final FoodService foodService = retrofit.create(FoodService.class);
-        Call<List<FoodItem>> lists = foodService.getAllMenu(fId);
+        final PackageService packageService = retrofit.create(PackageService.class);
+        Call<List<FoodItem>> lists = packageService.getAllMenu(fId);
         lists.enqueue(new Callback<List<FoodItem>>() {
             @Override
             public void onResponse(Call<List<FoodItem>> call, Response<List<FoodItem>> response) {

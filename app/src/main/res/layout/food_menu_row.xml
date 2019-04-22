@@ -39,7 +39,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="9dp"
             android:layout_marginRight="9dp"
-            android:src="@drawable/ecaterlogo" />
+            android:src="@drawable/transparentbglogo" />
 
         <TextView
             android:id="@+id/food_package_guests"
@@ -71,7 +71,7 @@
             android:layout_alignLeft="@+id/food_description"
             android:layout_alignStart="@+id/food_description"
             android:layout_below="@+id/food_description"
-            style="?android:attr/ratingBarStyleIndicator"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"/>
 
