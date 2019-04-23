@@ -32,7 +32,7 @@
         Button btn_wedding_next;
         EditText guest;
         String result, event_date, event_time, guest_count, position;
-        //int foodId;
+        ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@
 
         Intent intent = getIntent();
          result = intent.getStringExtra("EXTRA_MESSAGE");
-         //foodId = intent.getIntExtra("POSITION",0);
+        position = intent.getStringExtra("POSITION");
 
         txt_head.setText("When is the " + result);
 
@@ -124,28 +124,28 @@
                 if (result.contains("Wedding")) {
                     Intent i = new Intent(EventTimeActivity.this, WeddingPackageActivity.class);
                     i.putExtra("EXTRA_MESSAGE",result);
-                    //i.putExtra("POSITION",foodId);
+                    //i.putExtra("POSITION",position);
                     startActivity(i);
                     //imageView4.setImageResource(R.drawable.birthday);
                 }
-                if (result.contains("Birthday")) {
+                else if (result.contains("Birthday")) {
                     Intent i = new Intent(EventTimeActivity.this, BirthdayPackageActivity.class);
                     i.putExtra("EXTRA_MESSAGE",result);
-                    //i.putExtra("POSITION",foodId);
+                    //i.putExtra("POSITION",position);
                     startActivity(i);
                     //imageView4.setImageResource(R.drawable.birthday);
                 }
                 else if (result.contains("Party")) {
                     Intent i = new Intent(EventTimeActivity.this, PartyPackageActivity.class);
                     i.putExtra("EXTRA_MESSAGE",result);
-                    //i.putExtra("POSITION",foodId);
+                    //i.putExtra("POSITION",position);
                     startActivity(i);
                     //imageView4.setImageResource(R.drawable.gathering);
                 }
                 else if (result.contains("Funeral")) {
                     Intent i = new Intent(EventTimeActivity.this, WeddingPackageActivity.class);
                     i.putExtra("EXTRA_MESSAGE",result);
-                    //i.putExtra("POSITION",foodId);
+                    //i.putExtra("POSITION",position);
                     startActivity(i);
                     //imageView4.setImageResource(R.drawable.funeral);
                 }

@@ -10,12 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.obnoxious.ecatering.R;
-import com.obnoxious.ecatering.models.Event;
 import com.obnoxious.ecatering.models.FoodItem;
-import com.obnoxious.ecatering.view.EventTimeActivity;
+import com.obnoxious.ecatering.view.PackageDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,17 +24,29 @@ import java.util.List;
  * Created by Bleeding Rain on 4/17/2019.
  */
 
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder>{
+public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.HomeViewHolder>{
 
     List<FoodItem> foodItems;
     FoodItem foodItem = new FoodItem();
     Context c;
-    String photoPath;
+    String photoPath, menuName;
+    private OnItemClickListener onClickListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnClickListener(OnItemClickListener listener){
+
+        onClickListener = listener;
+
+    }
 
     public class HomeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView mImageView;
         public TextView mName, toolbar_title, food_description, food_package_guests;
+        RelativeLayout rl_main;
 
         public HomeViewHolder(View itemView) {
             super(itemView);
@@ -49,10 +61,23 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
             mName.setTypeface(face);
             food_description.setTypeface(face);
             food_package_guests.setTypeface(face);
+
+            rl_main = itemView.findViewById(R.id.rl_main);
+            rl_main.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onClickListener!=null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            onClickListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
 
         public void bindMenu(FoodItem foodItem){
-            String menuName = foodItem.getPackageType();
+            menuName = foodItem.getPackageType();
             String description = foodItem.getPackageDescription();
             String guests = foodItem.getPackagePrice();
             mName.setText(menuName);
@@ -72,7 +97,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
         }
     }
 
-    public FoodAdapter(List<FoodItem> foodItems){
+    public PackageAdapter(List<FoodItem> foodItems){
 
         this.foodItems = foodItems;
     }
@@ -88,17 +113,22 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.HomeViewHolder
     public void onBindViewHolder(@NonNull final HomeViewHolder holder, final int position) {
 
         holder.bindMenu(foodItems.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(position == 0){
-                    //Intent i = new Intent(c, EventTimeActivity.class);
-                    //i.putExtra("EXTRA_MESSAGE","Wedding");
-                    //c.startActivity(i);
-                }
-                Log.d("position", "onClick: "+ foodItems.get(position));
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (position == position){
+//                    Intent i = new Intent(c, PackageDetailsActivity.class);
+//                    i.putExtra("PackageId",position);
+//                    i.putExtra("Package_Name",String.valueOf(foodItems.get(position).getPackageType()));
+//                    //i.putExtra("PACKAGE_NAME",menuName);
+//                    c.startActivity(i);
+//                }
+//                else {
+//                    Log.d("position", "onClick: Starting activity Failed");
+//                }
+//                Log.d("position", "onClick: "+ foodItems.get(position));
+//            }
+//        });
     }
 
     @Override

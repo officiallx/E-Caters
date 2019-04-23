@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.liuguangqiang.swipeback.SwipeBackLayout;
 import com.obnoxious.ecatering.R;
-import com.obnoxious.ecatering.adapters.FoodAdapter;
+import com.obnoxious.ecatering.adapters.PackageAdapter;
 import com.obnoxious.ecatering.models.FoodItem;
 import com.obnoxious.ecatering.services.PackageService;
 
@@ -29,22 +29,24 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class WeddingPackageActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener{
+public class WeddingPackageActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener, PackageAdapter.OnItemClickListener{
 
-    private final String baseUrl = "http://192.168.100.24:8080/"; // base url to connect to server
-    FoodAdapter mAdapter;
+    private final String baseUrl = "http:/192.168.100.24:8080/"; // base url to connect to server
+    PackageAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
     TextView toolbar_title, txtFoodPackage;
     Intent intent = new Intent();
-    List<FoodItem> foods = new ArrayList<>();
+    List<FoodItem> foods;
     String result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wedding_package);
+
+        foods = new ArrayList<>();
 
         Intent intent = getIntent();
         result = intent.getStringExtra("EXTRA_MESSAGE");
@@ -55,7 +57,7 @@ public class WeddingPackageActivity extends AppCompatActivity implements SwipeBa
         mLayoutManager = new LinearLayoutManager(this);
         //mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new FoodAdapter(foods);
+        mAdapter = new PackageAdapter(foods);
 
         getAllItems();
 
@@ -126,8 +128,9 @@ public class WeddingPackageActivity extends AppCompatActivity implements SwipeBa
             public void onResponse(Call<List<FoodItem>> call, Response<List<FoodItem>> response) {
                 if (response.isSuccessful()) {
                     foods = response.body();
-                    mAdapter = new FoodAdapter(foods);
+                    mAdapter = new PackageAdapter(foods);
                     mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnClickListener(WeddingPackageActivity.this);
                     Log.d("Menu", "onResponse: " + foods);
                 }
             }
@@ -138,5 +141,13 @@ public class WeddingPackageActivity extends AppCompatActivity implements SwipeBa
                 //Toast.makeText(c, "Failed to Load", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent i = new Intent(this,PackageDetailsActivity.class);
+        i.putExtra("Package_Name",foods.get(position).getPackageType());
+        i.putExtra("Package_Price",foods.get(position).getPackagePrice());
+        startActivity(i);
     }
 }

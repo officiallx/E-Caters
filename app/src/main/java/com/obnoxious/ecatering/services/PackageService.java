@@ -19,4 +19,10 @@ public interface PackageService {
     Call<List<FoodItem>> getAllMenu(
             @Path("eventId") Long eventId
     );
+
+    @GET("api/event/{eventId}/package/{packageId}")
+    Call<List<FoodItem>> getPackagebyId(
+            @Path("eventId") Long eventId,
+            @Path("packageId") Long packageId
+    );
 }

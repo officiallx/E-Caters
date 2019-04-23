@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.liuguangqiang.swipeback.SwipeBackLayout;
 import com.obnoxious.ecatering.R;
-import com.obnoxious.ecatering.adapters.FoodAdapter;
+import com.obnoxious.ecatering.adapters.PackageAdapter;
 import com.obnoxious.ecatering.models.FoodItem;
 import com.obnoxious.ecatering.services.PackageService;
 
@@ -29,17 +29,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BirthdayPackageActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener{
+public class BirthdayPackageActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener, PackageAdapter.OnItemClickListener{
 
     private final String baseUrl = "http://192.168.100.24:8080/"; // base url to connect to server
-    FoodAdapter mAdapter;
+    PackageAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
     TextView toolbar_title, txtFoodPackage;
-    Intent intent = new Intent();
     List<FoodItem> foods = new ArrayList<>();
+    Intent intent = new Intent();
     String result;
 
     @Override
@@ -56,7 +56,7 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
         mLayoutManager = new LinearLayoutManager(this);
         //mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new FoodAdapter(foods);
+        mAdapter = new PackageAdapter(foods);
 
         getAllItems();
 
@@ -113,7 +113,7 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
     public void getAllItems(){
 
         int eventId = intent.getIntExtra("POSITION",2);
-        Long fId = (long) eventId;
+        Long fId = (long) (eventId);
 
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -127,8 +127,9 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
             public void onResponse(Call<List<FoodItem>> call, Response<List<FoodItem>> response) {
                 if (response.isSuccessful()) {
                     foods = response.body();
-                    mAdapter = new FoodAdapter(foods);
+                    mAdapter = new PackageAdapter(foods);
                     mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnClickListener(BirthdayPackageActivity.this);
                     Log.d("Menu", "onResponse: " + foods);
                 }
             }
@@ -139,5 +140,13 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
                 //Toast.makeText(c, "Failed to Load", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent i = new Intent(this,PackageDetailsActivity.class);
+        i.putExtra("Package_Name",foods.get(position).getPackageType());
+        i.putExtra("Package_Price",foods.get(position).getPackagePrice());
+        startActivity(i);
     }
 }
