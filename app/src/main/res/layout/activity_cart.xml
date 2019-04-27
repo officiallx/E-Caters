@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.CartActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="5dp"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cartName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/caviar_dreams"
+                android:padding="5dp"
+                android:text="Package Name"
+                android:textColor="#000000"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/round_background"
+                android:fontFamily="@font/caviar_dreams"
+                android:padding="5dp"
+                android:text="Selected Services"
+                android:textColor="#ffffff"
+                android:textSize="10dp" />
+
+            <ListView
+                android:id="@+id/lv_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/included_items"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/cv_cart"
+        android:layout_margin="5dp"
+        android:clipToPadding="true"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/caviar_dreams"
+                android:text="Inclusive : "
+                android:textColor="#000000" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/waiter"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/waiter" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tableware"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:text="Waiter Service"
+                    android:textSize="9dp" />
+
+                <ImageView
+                    android:id="@+id/music"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignLeft="@+id/waiter"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="94dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/entertainment" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/music"
+                    android:layout_alignLeft="@+id/music"
+                    android:layout_marginLeft="-20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:text="Entertainment Service"
+                    android:textSize="9dp" />
+
+                <ImageView
+                    android:id="@+id/tableware"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignLeft="@+id/music"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="105dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/table" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tableware"
+                    android:layout_alignLeft="@+id/music"
+                    android:layout_marginLeft="90dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:text="Tableware Service"
+                    android:textSize="9dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/event_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/included_items"
+        android:layout_margin="5dp"
+        android:clipToPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Where is the Event"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/caviar_dreams"
+                android:textSize="14dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/caviar_dreams"
+                android:padding="5dp"
+                android:text="Event Venue:" />
+
+            <EditText
+                android:id="@+id/txtEventVenue"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/caviar_dreams"
+                android:textSize="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/caviar_dreams"
+                android:padding="5dp"
+                android:text="Event Venue Address:" />
+
+            <EditText
+                android:id="@+id/txtEventAddress"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/caviar_dreams"
+                android:textSize="16dp"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/btnPlaceOrder"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event_details"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:ems="20"
+            android:text="Order"/>
+
+</RelativeLayout>

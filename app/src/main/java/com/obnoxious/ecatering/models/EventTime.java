@@ -10,6 +10,14 @@ public class EventTime {
     private String eventTime;
     private String guest_count;
 
+//    public EventTime(int eventDatId, String eventDate, String eventTime, String guest_count) {
+//        this.eventDatId = eventDatId;
+//        this.eventDate = eventDate;
+//        this.eventTime = eventTime;
+//        this.guest_count = guest_count;
+//    }
+
+
     public String getEventDate() {
         return eventDate;
     }
@@ -32,5 +40,14 @@ public class EventTime {
 
     public void setGuest_count(String guest_count) {
         this.guest_count = guest_count;
+    }
+
+    @Override
+    public String toString() {
+        return "EventTime{" +
+                "eventDate='" + eventDate + '\'' +
+                ", eventTime='" + eventTime + '\'' +
+                ", guest_count='" + guest_count + '\'' +
+                '}';
     }
 }

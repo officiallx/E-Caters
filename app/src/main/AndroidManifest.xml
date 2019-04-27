@@ -14,11 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.SplashScreen">
-        </activity>
+        <activity android:name=".view.CartActivity"></activity>
+        <activity android:name=".ui.SplashScreen" />
         <activity
             android:name=".view.EventActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +31,8 @@
         <activity android:name=".view.WeddingPackageActivity" />
         <activity android:name=".view.BirthdayPackageActivity" />
         <activity android:name=".view.PartyPackageActivity" />
-        <activity android:name=".view.PackageDetailsActivity"></activity>
+        <activity android:name=".view.PackageDetailsActivity" />
+        <activity android:name=".view.DetailsPackageActivity" />
     </application>
 
 </manifest>

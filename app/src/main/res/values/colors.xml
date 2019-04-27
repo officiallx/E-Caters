@@ -5,4 +5,7 @@
     <color name="colorAccent">#13a9ef</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#03000000</color>
+    <color name="tabindicator">#F5B11C</color>
+    <color name="teal">#008577</color>
+
 </resources>

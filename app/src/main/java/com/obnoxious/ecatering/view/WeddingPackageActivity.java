@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.liuguangqiang.swipeback.SwipeBackLayout;
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.adapters.PackageAdapter;
-import com.obnoxious.ecatering.models.FoodItem;
+import com.obnoxious.ecatering.models.Package;
 import com.obnoxious.ecatering.services.PackageService;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class WeddingPackageActivity extends AppCompatActivity implements SwipeBa
     private ImageView ivShadow;
     TextView toolbar_title, txtFoodPackage;
     Intent intent = new Intent();
-    List<FoodItem> foods;
+    List<Package> foods;
     String result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +85,7 @@ public class WeddingPackageActivity extends AppCompatActivity implements SwipeBa
         swipeBackLayout.addView(view);
     }
 
+    //for swipe back
     private View getContainer() {
         RelativeLayout container = new RelativeLayout(this);
         swipeBackLayout = new SwipeBackLayout(this);
@@ -122,10 +123,10 @@ public class WeddingPackageActivity extends AppCompatActivity implements SwipeBa
                 .build();
 
         final PackageService packageService = retrofit.create(PackageService.class);
-        Call<List<FoodItem>> lists = packageService.getAllMenu(fId);
-        lists.enqueue(new Callback<List<FoodItem>>() {
+        Call<List<Package>> lists = packageService.getAllMenu(fId);
+        lists.enqueue(new Callback<List<Package>>() {
             @Override
-            public void onResponse(Call<List<FoodItem>> call, Response<List<FoodItem>> response) {
+            public void onResponse(Call<List<Package>> call, Response<List<Package>> response) {
                 if (response.isSuccessful()) {
                     foods = response.body();
                     mAdapter = new PackageAdapter(foods);
@@ -136,7 +137,7 @@ public class WeddingPackageActivity extends AppCompatActivity implements SwipeBa
             }
 
             @Override
-            public void onFailure(Call<List<FoodItem>> call, Throwable t) {
+            public void onFailure(Call<List<Package>> call, Throwable t) {
                 Log.d("Menu", "onFailure: " + t.getMessage());
                 //Toast.makeText(c, "Failed to Load", Toast.LENGTH_SHORT).show();
             }
@@ -146,6 +147,7 @@ public class WeddingPackageActivity extends AppCompatActivity implements SwipeBa
     @Override
     public void onItemClick(int position) {
         Intent i = new Intent(this,PackageDetailsActivity.class);
+        i.putExtra("Package_Id",String.valueOf(foods.get(position).getPackageId()));
         i.putExtra("Package_Name",foods.get(position).getPackageType());
         i.putExtra("Package_Price",foods.get(position).getPackagePrice());
         startActivity(i);

@@ -1,23 +1,19 @@
 package com.obnoxious.ecatering.services;
 
-import com.obnoxious.ecatering.models.EventTime;
+import com.obnoxious.ecatering.models.Order;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
-/**
- * Created by Bleeding Rain on 4/21/2019.
- */
-
-public interface EventTimeService {
+public interface OrderService {
 
     @Headers({
             "Content-Type: application/json"
     })
-    @POST("api/datetime")
-    Call<Void> postEventTime(
-            @Body EventTime datetime
+    @POST("api/order")
+    Call<Void> addOrder(
+            @Body Order order
     );
 }

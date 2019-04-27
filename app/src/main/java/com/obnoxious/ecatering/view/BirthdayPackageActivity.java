@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.liuguangqiang.swipeback.SwipeBackLayout;
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.adapters.PackageAdapter;
-import com.obnoxious.ecatering.models.FoodItem;
+import com.obnoxious.ecatering.models.Package;
 import com.obnoxious.ecatering.services.PackageService;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BirthdayPackageActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener, PackageAdapter.OnItemClickListener{
+public class BirthdayPackageActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener, PackageAdapter.OnItemClickListener {
 
     private final String baseUrl = "http://192.168.100.24:8080/"; // base url to connect to server
     PackageAdapter mAdapter;
@@ -38,7 +38,7 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
     TextView toolbar_title, txtFoodPackage;
-    List<FoodItem> foods = new ArrayList<>();
+    List<Package> foods = new ArrayList<>();
     Intent intent = new Intent();
     String result;
 
@@ -67,7 +67,7 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
         setSupportActionBar(toolbar);
         //set title to toolbar
         toolbar_title = findViewById(R.id.toolbar_title);
-        toolbar_title.setText(result+" Package");
+        toolbar_title.setText(result + " Package");
 
         txtFoodPackage = findViewById(R.id.textView7);
 
@@ -110,9 +110,9 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
     }
 
     //this is where it connects to the api
-    public void getAllItems(){
+    public void getAllItems() {
 
-        int eventId = intent.getIntExtra("POSITION",2);
+        int eventId = intent.getIntExtra("POSITION", 2);
         Long fId = (long) (eventId);
 
         final Retrofit retrofit = new Retrofit.Builder()
@@ -121,10 +121,10 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
                 .build();
 
         final PackageService packageService = retrofit.create(PackageService.class);
-        Call<List<FoodItem>> lists = packageService.getAllMenu(fId);
-        lists.enqueue(new Callback<List<FoodItem>>() {
+        Call<List<Package>> lists = packageService.getAllMenu(fId);
+        lists.enqueue(new Callback<List<Package>>() {
             @Override
-            public void onResponse(Call<List<FoodItem>> call, Response<List<FoodItem>> response) {
+            public void onResponse(Call<List<Package>> call, Response<List<Package>> response) {
                 if (response.isSuccessful()) {
                     foods = response.body();
                     mAdapter = new PackageAdapter(foods);
@@ -135,7 +135,7 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
             }
 
             @Override
-            public void onFailure(Call<List<FoodItem>> call, Throwable t) {
+            public void onFailure(Call<List<Package>> call, Throwable t) {
                 Log.d("Menu", "onFailure: " + t.getMessage());
                 //Toast.makeText(c, "Failed to Load", Toast.LENGTH_SHORT).show();
             }
@@ -144,9 +144,9 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
 
     @Override
     public void onItemClick(int position) {
-        Intent i = new Intent(this,PackageDetailsActivity.class);
-        i.putExtra("Package_Name",foods.get(position).getPackageType());
-        i.putExtra("Package_Price",foods.get(position).getPackagePrice());
+        Intent i = new Intent(this, PackageDetailsActivity.class);
+        i.putExtra("Package_Name", foods.get(position).getPackageType());
+        i.putExtra("Package_Price", foods.get(position).getPackagePrice());
         startActivity(i);
     }
 }

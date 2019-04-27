@@ -3,7 +3,7 @@ package com.obnoxious.ecatering.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FoodItem {
+public class Package {
 
     @SerializedName("packageId")
     @Expose

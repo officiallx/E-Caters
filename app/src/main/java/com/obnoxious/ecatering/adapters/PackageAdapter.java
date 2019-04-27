@@ -1,11 +1,9 @@
 package com.obnoxious.ecatering.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.obnoxious.ecatering.R;
-import com.obnoxious.ecatering.models.FoodItem;
-import com.obnoxious.ecatering.view.PackageDetailsActivity;
+import com.obnoxious.ecatering.models.Package;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -26,8 +23,8 @@ import java.util.List;
 
 public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.HomeViewHolder>{
 
-    List<FoodItem> foodItems;
-    FoodItem foodItem = new FoodItem();
+    List<Package> aPackages;
+    Package aPackage = new Package();
     Context c;
     String photoPath, menuName;
     private OnItemClickListener onClickListener;
@@ -76,15 +73,15 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.HomeView
             });
         }
 
-        public void bindMenu(FoodItem foodItem){
-            menuName = foodItem.getPackageType();
-            String description = foodItem.getPackageDescription();
-            String guests = foodItem.getPackagePrice();
+        public void bindMenu(Package aPackage){
+            menuName = aPackage.getPackageType();
+            String description = aPackage.getPackageDescription();
+            String guests = aPackage.getPackagePrice();
             mName.setText(menuName);
             food_description.setText(description);
             food_package_guests.setText("Rs. "+guests);
 
-            photoPath = (foodItem.getProfilePath());
+            photoPath = (aPackage.getProfilePath());
 
             Picasso.get().load(photoPath)
                     .fit()
@@ -97,43 +94,43 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.HomeView
         }
     }
 
-    public PackageAdapter(List<FoodItem> foodItems){
+    public PackageAdapter(List<Package> aPackages){
 
-        this.foodItems = foodItems;
+        this.aPackages = aPackages;
     }
 
     @Override
     public HomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_menu_row,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.package_row,parent,false);
         return new HomeViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final HomeViewHolder holder, final int position) {
 
-        holder.bindMenu(foodItems.get(position));
+        holder.bindMenu(aPackages.get(position));
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                if (position == position){
 //                    Intent i = new Intent(c, PackageDetailsActivity.class);
 //                    i.putExtra("PackageId",position);
-//                    i.putExtra("Package_Name",String.valueOf(foodItems.get(position).getPackageType()));
+//                    i.putExtra("Package_Name",String.valueOf(aPackages.get(position).getPackageType()));
 //                    //i.putExtra("PACKAGE_NAME",menuName);
 //                    c.startActivity(i);
 //                }
 //                else {
 //                    Log.d("position", "onClick: Starting activity Failed");
 //                }
-//                Log.d("position", "onClick: "+ foodItems.get(position));
+//                Log.d("position", "onClick: "+ aPackages.get(position));
 //            }
 //        });
     }
 
     @Override
     public int getItemCount() {
-        return foodItems.size();
+        return aPackages.size();
     }
 
 
