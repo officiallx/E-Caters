@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
     RelativeLayout relativeLayout;
     TextView toolbar_title, txt_slogan;
 
-    List<Event> events = new ArrayList();
+    ArrayList events = new ArrayList();
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, null);
@@ -151,7 +151,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                     if (response.isSuccessful()) {
-                        events = response.body();
+                        events = (ArrayList) response.body();
                         mAdapter = new HomeAdapter(events);
                         mRecyclerView.setAdapter(mAdapter);
                         Log.d("Events", "onResponse: " + events);
