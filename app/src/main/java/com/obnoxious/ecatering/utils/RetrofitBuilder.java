@@ -1,5 +1,8 @@
 package com.obnoxious.ecatering.utils;
 
+import com.obnoxious.ecatering.services.EventService;
+import com.obnoxious.ecatering.services.LoginService;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -10,11 +13,28 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitBuilder {
 
     private final String baseUrl = "http://192.168.100.24:8080/";
+    private static RetrofitBuilder mInstance;
+    private Retrofit retrofit;
 
-    public void getAllEvents() {
-        final Retrofit retrofit = new Retrofit.Builder()
+    private RetrofitBuilder() {
+        retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+    }
+
+    public static synchronized RetrofitBuilder getInstance(){
+        if(mInstance == null){
+            mInstance = new RetrofitBuilder();
+        }
+        return mInstance;
+    }
+
+    public EventService eventService(){
+        return retrofit.create(EventService.class);
+    }
+
+    public LoginService loginService(){
+        return retrofit.create(LoginService.class);
     }
 }

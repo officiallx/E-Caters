@@ -25,6 +25,7 @@ import com.obnoxious.ecatering.adapters.HomeAdapter;
 import com.obnoxious.ecatering.models.Event;
 import com.obnoxious.ecatering.services.EventService;
 import com.obnoxious.ecatering.ui.NoConnectionActivity;
+import com.obnoxious.ecatering.utils.RetrofitBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
 
-    private final String baseUrl = "http://192.168.100.24:8080/"; // base url to connect to server
     HomeAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
@@ -86,12 +86,11 @@ public class HomeFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(isNetworkConnectionAvailable()){
+                if (isNetworkConnectionAvailable()) {
                     getAllEvents();
                     swipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(c, "Refresh Successful", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     startNoInternetActivity();
                     //checkNetworkConnection();
                     swipeRefreshLayout.setRefreshing(false);
@@ -111,8 +110,7 @@ public class HomeFragment extends Fragment {
         //checks if there is internet connection or not if not it throws the alert dialog
         if (isNetworkConnectionAvailable()) {
             getAllEvents();
-        }
-        else{
+        } else {
             startNoInternetActivity();
             //checkNetworkConnection();
         }
@@ -138,36 +136,34 @@ public class HomeFragment extends Fragment {
     }
 
     //this is where it connects to the api
-    public void getAllEvents(){
+    public void getAllEvents() {
 
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Call<List<Event>> eventCall = RetrofitBuilder
+                .getInstance()
+                .eventService()
+                .getAllMenu();
 
-            final EventService eventService = retrofit.create(EventService.class);
-            Call<List<Event>> lists = eventService.getAllMenu();
-            lists.enqueue(new Callback<List<Event>>() {
-                @Override
-                public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                    if (response.isSuccessful()) {
-                        events = (ArrayList) response.body();
-                        mAdapter = new HomeAdapter(events);
-                        mRecyclerView.setAdapter(mAdapter);
-                        Log.d("Events", "onResponse: " + events);
-                    }
+        eventCall.enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                if (response.isSuccessful()) {
+                    events = (ArrayList) response.body();
+                    mAdapter = new HomeAdapter(events);
+                    mRecyclerView.setAdapter(mAdapter);
+                    Log.d("Events", "onResponse: " + events);
                 }
+            }
 
-                @Override
-                public void onFailure(Call<List<Event>> call, Throwable t) {
-                    Log.d("Events", "onFailure: " + t.getMessage());
-                    //Toast.makeText(c, "Failed to Load", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+                Log.d("Events", "onFailure: " + t.getMessage());
+                //Toast.makeText(c, "Failed to Load", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     //checks if internet connection is available or not
-    public boolean isNetworkConnectionAvailable(){
+    public boolean isNetworkConnectionAvailable() {
         ConnectivityManager cm = (ConnectivityManager) c.getSystemService(c.CONNECTIVITY_SERVICE);
         android.net.NetworkInfo wifi = cm
                 .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -177,7 +173,7 @@ public class HomeFragment extends Fragment {
                 && (wifi.isConnected() | datac.isConnected())) {
             //connection is avlilable
             return true;
-        }else{
+        } else {
             //no connection
             //Toast toast = Toast.makeText(c, "No Internet Connection",
             //       Toast.LENGTH_LONG);
@@ -186,7 +182,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void startNoInternetActivity(){
+    public void startNoInternetActivity() {
 
         Intent i = new Intent(c, NoConnectionActivity.class);
         startActivity(i);

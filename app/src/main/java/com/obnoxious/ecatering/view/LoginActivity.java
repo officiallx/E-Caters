@@ -12,9 +12,11 @@ import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.models.User;
 import com.obnoxious.ecatering.services.EventTimeService;
 import com.obnoxious.ecatering.services.LoginService;
+import com.obnoxious.ecatering.utils.RetrofitBuilder;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText txtUsername, txtPassword;
     Button btnLogin;
-    private final String baseUrl = "http://192.168.100.24:8080/";
     User user = new User();
     int responseCode;
 
@@ -42,37 +43,37 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(baseUrl)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-
-                final LoginService loginService = retrofit.create(LoginService.class);
-
                 user.setUsername(txtUsername.getText().toString());
                 user.setPassword(txtPassword.getText().toString());
 
-                Call<Void> eventTimeCall = loginService.login(user);
-                eventTimeCall.enqueue(new Callback<Void>() {
+                Call<Void> call = RetrofitBuilder
+                        .getInstance()
+                        .loginService()
+                        .login(user);
+                call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         responseCode = response.code();
-                        if (responseCode == 200){
-                            Intent i = new Intent(LoginActivity.this,EventActivity.class);
-                            startActivity(i);
-                            Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_LONG).show();
+                        if (responseCode == 200) {
+                            startNewActivity();
+                            Toast.makeText(LoginActivity.this,"Login Success",Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(getApplicationContext(), "Check Username or Password", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Incorrect Credential", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Username or Password Incorrect", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this,"Cannot find username or password",Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
+    }
+
+    public void startNewActivity(){
+        Intent i = new Intent(LoginActivity.this,EventActivity.class);
+        startActivity(i);
     }
 }
