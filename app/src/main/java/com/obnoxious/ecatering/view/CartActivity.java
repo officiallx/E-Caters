@@ -1,7 +1,10 @@
 package com.obnoxious.ecatering.view;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,12 +34,15 @@ public class CartActivity extends AppCompatActivity {
     final String baseUrl = "http://192.168.100.24:8080/";
     TextView txt_toolbar_title;
     String packageName, eventVenue, eventAddress;
-    TextView cartName;
+    TextView cartName, txt_title, txt_title_detail;
+    ImageView img_close;
     EditText txtEventVenue, txtEventAddress;
     ArrayList<String> packageChosen;
     ListView lv_order;
-    Button btnPlaceOrder;
+    Button btnPlaceOrder, btnDone;
     Order orders = new Order();
+    Dialog successDialog;
+    int responseCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +81,8 @@ public class CartActivity extends AppCompatActivity {
         txtEventVenue = findViewById(R.id.txtEventVenue);
         txtEventAddress = findViewById(R.id.txtEventAddress);
 
+        successDialog = new Dialog(this);
+
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +96,10 @@ public class CartActivity extends AppCompatActivity {
                 orders.setEventAddress(eventAddress);
 
                 saveOrder();
+
+                if (responseCode == 200){
+                    showPopup();
+                }
             }
         });
 
@@ -104,6 +117,7 @@ public class CartActivity extends AppCompatActivity {
         orderCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                responseCode = response.code();
                 Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
             }
 
@@ -113,5 +127,35 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void showPopup(){
+
+        successDialog.setContentView(R.layout.custompopup);
+        img_close = successDialog.findViewById(R.id.popup_success_close);
+        btnDone = successDialog.findViewById(R.id.btn_success_popup_done);
+        txt_title = successDialog.findViewById(R.id.txt_success);
+        txt_title_detail = successDialog.findViewById(R.id.txt_success_detail);
+
+        img_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                successDialog.dismiss();
+                Intent i = new Intent(CartActivity.this,EventActivity.class);
+                startActivity(i);
+            }
+        });
+
+        successDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        successDialog.show();
+
+        btnDone = successDialog.findViewById(R.id.btn_success_popup_done);
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CartActivity.this,EventActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

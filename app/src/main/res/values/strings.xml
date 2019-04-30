@@ -8,6 +8,6 @@
     <string name="internet_message">Check your internet connection to continue</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="order_successful">You have order success</string>
+    <string name="order_successful">You order has been placed successfully. You will receive a phone call to confirm the order</string>
 
 </resources>
