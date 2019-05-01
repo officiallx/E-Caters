@@ -2,6 +2,7 @@ package com.obnoxious.ecatering.utils;
 
 import com.obnoxious.ecatering.services.EventService;
 import com.obnoxious.ecatering.services.LoginService;
+import com.obnoxious.ecatering.services.RegisterService;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -36,6 +37,10 @@ public class RetrofitBuilder {
 
     public LoginService loginService(){
         return retrofit.create(LoginService.class);
+    }
+
+    public RegisterService registerService(){
+        return retrofit.create(RegisterService.class);
     }
 
 }

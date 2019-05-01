@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
 
     EditText txtUsername, txtPassword;
-    Button btnLogin;
+    Button btnLogin,btnNewRegister;
     User user = new User();
     int responseCode;
     String userId, username;
@@ -83,6 +83,15 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Cannot find username or password", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+
+        btnNewRegister = findViewById(R.id.btnNewRegister);
+        btnNewRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(i);
             }
         });
     }
