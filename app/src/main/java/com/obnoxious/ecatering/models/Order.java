@@ -7,9 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Order {
 
-    @SerializedName("orderId")
-    @Expose
-    private Integer orderId;
     @SerializedName("packageName")
     @Expose
     private String packageName;
@@ -21,7 +18,10 @@ public class Order {
     private String eventAddress;
     @SerializedName("userId")
     @Expose
-    private String userId;
+    private Long userId;
+    @SerializedName("orderId")
+    @Expose
+    private Integer orderId;
 
     public String getPackageName() {
         return packageName;
@@ -47,6 +47,14 @@ public class Order {
         this.eventAddress = eventAddress;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public Integer getOrderId() {
         return orderId;
     }
@@ -55,11 +63,4 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.models.EventTime;
 import com.obnoxious.ecatering.services.EventTimeService;
+import com.obnoxious.ecatering.utils.RetrofitBuilder;
 
 import java.util.Calendar;
 
@@ -33,7 +34,7 @@ public class EventTimeActivity extends AppCompatActivity {
     Calendar c;
     DatePickerDialog datePickerDialog;
     TimePickerDialog timePickerDialog;
-    String format;
+    String format, userId;
     Button btn_wedding_next;
     EditText guest;
     String result, event_date, event_time, guest_count, position;
@@ -58,6 +59,7 @@ public class EventTimeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         result = intent.getStringExtra("EXTRA_MESSAGE");
         position = intent.getStringExtra("POSITION");
+        userId = intent.getStringExtra("USER_ID");
 
 
         txt_head.setText("When is the " + result);
@@ -156,13 +158,10 @@ public class EventTimeActivity extends AppCompatActivity {
 
     public void saveEventTime() {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        final EventTimeService eventTimeService = retrofit.create(EventTimeService.class);
-        Call<Void> eventTimeCall = eventTimeService.postEventTime(datetime);
+        Call<Void> eventTimeCall = RetrofitBuilder
+                .getInstance()
+                .eventTimeService()
+                .postEventTime(datetime);
         eventTimeCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

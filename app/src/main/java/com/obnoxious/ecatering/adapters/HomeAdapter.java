@@ -1,7 +1,9 @@
 package com.obnoxious.ecatering.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -16,10 +18,14 @@ import android.widget.TextView;
 
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.models.Event;
+import com.obnoxious.ecatering.models.User;
 import com.obnoxious.ecatering.view.EventTimeActivity;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Bleeding Rain on 4/17/2019.
@@ -29,8 +35,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     List<Event> events;
     Event event = new Event();
-    Context c;
-    String photoPath;
+    Context c,d;
+    String photoPath, userId;
+
     /*private OnItemClickListener onClickListener;
 
     public interface OnItemClickListener{
@@ -60,20 +67,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             Typeface face = Typeface.createFromAsset(c.getAssets(), "font/CaviarDreams.ttf");
             mName.setTypeface(face);
 
-/*            rl_main = itemView.findViewById(R.id.rl_main);
-            rl_main.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onClickListener!=null){
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION){
-                            onClickListener.onItemClick(position);
-                        }
-                    }
-                }
-            });
+            SharedPreferences prefs = c.getSharedPreferences("USER_ID", MODE_PRIVATE);
+            userId = prefs.getString("USER_ORDER_ID",null);
+            Log.d("username", "home adapter ko user id woo hoo: "+userId);
 
-            cv_home = itemView.findViewById(R.id.cv_home);
+/*            cv_home = itemView.findViewById(R.id.cv_home);
             cv_home.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -129,6 +127,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 if(position == 0){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Wedding");
+                    i.putExtra("USER_ID",userId);
                     String pos = Integer.toString(position);
                     i.putExtra("POSITION",pos);
                     c.startActivity(i);
@@ -136,6 +135,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 if(position == 1){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Birthday");
+                    i.putExtra("USER_ID",userId);
                     String pos = Integer.toString(position);
                     i.putExtra("POSITION",pos);
                     c.startActivity(i);
@@ -143,6 +143,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 if(position == 2){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Party");
+                    i.putExtra("USER_ID",userId);
                     String pos = Integer.toString(position);
                     i.putExtra("POSITION",pos);
                     c.startActivity(i);
@@ -150,6 +151,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 if(position == 3){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Funeral");
+                    i.putExtra("USER_ID",userId);
                     String pos = Integer.toString(position);
                     i.putExtra("POSITION",pos);
                     c.startActivity(i);

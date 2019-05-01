@@ -2,6 +2,7 @@ package com.obnoxious.ecatering.view;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.models.Order;
+import com.obnoxious.ecatering.models.User;
 import com.obnoxious.ecatering.services.OrderService;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class CartActivity extends AppCompatActivity {
     Order orders = new Order();
     Dialog successDialog;
     int responseCode;
+    User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,11 @@ public class CartActivity extends AppCompatActivity {
 
         successDialog = new Dialog(this);
 
+        // To load the data at a later time
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("USER_ID", MODE_PRIVATE);
+        final String loadedString = prefs.getString("USER_ORDER_ID", null);
+        Log.d("username", "cart ko user id woo hoo hooo ooo: "+loadedString);
+
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +102,7 @@ public class CartActivity extends AppCompatActivity {
                 orders.setPackageName(packageName);
                 orders.setEventVenue(eventVenue);
                 orders.setEventAddress(eventAddress);
+                orders.setUserId(Long.valueOf(loadedString));
 
                 saveOrder();
 

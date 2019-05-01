@@ -19,6 +19,7 @@ import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.adapters.PackageAdapter;
 import com.obnoxious.ecatering.models.Package;
 import com.obnoxious.ecatering.services.PackageService;
+import com.obnoxious.ecatering.utils.RetrofitBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,13 +127,10 @@ public class PackageActivity extends AppCompatActivity implements SwipeBackLayou
         Long fId = (long) pos;
         Log.d("position", "long positon: "+fId);
 
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        final PackageService packageService = retrofit.create(PackageService.class);
-        Call<List<Package>> lists = packageService.getAllMenu(fId+1L);
+        Call<List<Package>> lists = RetrofitBuilder
+                .getInstance()
+                .packageService()
+                .getAllMenu(fId+1L);
         lists.enqueue(new Callback<List<Package>>() {
             @Override
             public void onResponse(Call<List<Package>> call, Response<List<Package>> response) {

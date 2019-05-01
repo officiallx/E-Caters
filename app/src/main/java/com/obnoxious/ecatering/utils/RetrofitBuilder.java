@@ -1,7 +1,11 @@
 package com.obnoxious.ecatering.utils;
 
+import com.obnoxious.ecatering.services.BreakfastService;
 import com.obnoxious.ecatering.services.EventService;
+import com.obnoxious.ecatering.services.EventTimeService;
 import com.obnoxious.ecatering.services.LoginService;
+import com.obnoxious.ecatering.services.OrderService;
+import com.obnoxious.ecatering.services.PackageService;
 import com.obnoxious.ecatering.services.RegisterService;
 
 import retrofit2.Retrofit;
@@ -41,6 +45,19 @@ public class RetrofitBuilder {
 
     public RegisterService registerService(){
         return retrofit.create(RegisterService.class);
+    }
+
+    public EventTimeService eventTimeService(){
+        return retrofit.create(EventTimeService.class);
+    }
+    public OrderService orderService(){
+        return retrofit.create(OrderService.class);
+    }
+    public PackageService packageService(){
+        return retrofit.create(PackageService.class);
+    }
+    public BreakfastService breakfastService(){
+        return retrofit.create(BreakfastService.class);
     }
 
 }

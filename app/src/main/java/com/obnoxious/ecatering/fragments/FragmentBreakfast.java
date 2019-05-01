@@ -1,11 +1,13 @@
 package com.obnoxious.ecatering.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,7 +21,9 @@ import android.widget.TextView;
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.adapters.BreakfastAdapter;
 import com.obnoxious.ecatering.models.Breakfast;
+import com.obnoxious.ecatering.models.Package;
 import com.obnoxious.ecatering.services.BreakfastService;
+import com.obnoxious.ecatering.utils.RetrofitBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +44,7 @@ public class FragmentBreakfast extends Fragment {
     TextView mName;
     String packageId;
     Long packageid;
+    int id;
     Bundle bundle = this.getArguments();
 
     List<Breakfast> breakfasts = new ArrayList<>();
@@ -57,6 +62,11 @@ public class FragmentBreakfast extends Fragment {
        /* packageId = bundle.getString("package_id");
         packageid = Long.valueOf(packageId);*/
 
+        assert c != null;
+        Intent intent = ((FragmentActivity) c).getIntent();
+        packageId = intent.getStringExtra("Package_Id");
+        id = Integer.parseInt(packageId);
+
         rv_breakfast = view.findViewById(R.id.rv_breakfast);
         mLayoutManager = new LinearLayoutManager(c);
         rv_breakfast.setLayoutManager(mLayoutManager);
@@ -72,13 +82,12 @@ public class FragmentBreakfast extends Fragment {
 
     public void getAllBreakfast(){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        packageid = (long) id;
 
-        final BreakfastService breakfastService = retrofit.create(BreakfastService.class);
-        Call<List<Breakfast>> breakfastCall = breakfastService.getAllBreakfast(8L);
+        Call<List<Breakfast>> breakfastCall = RetrofitBuilder
+                .getInstance()
+                .breakfastService()
+                .getAllBreakfast(packageid);
         breakfastCall.enqueue(new Callback<List<Breakfast>>() {
             @Override
             public void onResponse(Call<List<Breakfast>> call, Response<List<Breakfast>> response) {

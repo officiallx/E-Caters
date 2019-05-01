@@ -1,6 +1,7 @@
 package com.obnoxious.ecatering.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -65,6 +66,10 @@ public class EventActivity extends AppCompatActivity {
         Intent intent = getIntent();
         user_id = intent.getStringExtra("USER_ID");
         Log.d("username", "event activity ko id: "+user_id);
+
+        SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("USER_ID", MODE_PRIVATE).edit();
+        editor.putString("USER_ORDER_ID", user_id);
+        editor.apply();
 
         //checks if there is internet connection or not if not it throws the alert dialog
         if (isNetworkConnectionAvailable()) {
