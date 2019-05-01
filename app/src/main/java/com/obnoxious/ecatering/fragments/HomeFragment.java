@@ -7,7 +7,9 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,10 +24,13 @@ import android.widget.ViewFlipper;
 
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.adapters.HomeAdapter;
+import com.obnoxious.ecatering.adapters.PackageAdapter;
 import com.obnoxious.ecatering.models.Event;
 import com.obnoxious.ecatering.services.EventService;
 import com.obnoxious.ecatering.ui.NoConnectionActivity;
 import com.obnoxious.ecatering.utils.RetrofitBuilder;
+import com.obnoxious.ecatering.view.EventTimeActivity;
+import com.obnoxious.ecatering.view.PackageDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,16 +55,24 @@ public class HomeFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     RelativeLayout relativeLayout;
     TextView toolbar_title, txt_slogan;
+    String user_id;
+    CardView cv_home;
 
-    ArrayList events = new ArrayList();
+    List<Event> events = new ArrayList();
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, null);
+        final View view = inflater.inflate(R.layout.fragment_home, null);
 
         relativeLayout = view.findViewById(R.id.rl_main);
         mRecyclerView = view.findViewById(R.id.rv_home);
+        cv_home = view.findViewById(R.id.cv_home);
 
         c = getActivity();
+
+        assert c != null;
+        Intent intent = ((FragmentActivity) c).getIntent();
+        user_id = intent.getStringExtra("USER_ID");
+        Log.d("username", "home fragment ko user id : "+user_id);
 
         Typeface face = Typeface.createFromAsset(c.getAssets(), "font/CaviarDreams.ttf");
 
@@ -189,3 +202,8 @@ public class HomeFragment extends Fragment {
     }
 
 }
+/*
+        Log.d("username", "onItemClick: chaliracha");
+                Intent i = new Intent(c, EventTimeActivity.class);
+        i.putExtra("Event_Name", events.get(position).getEventName());
+        startActivity(i);*/

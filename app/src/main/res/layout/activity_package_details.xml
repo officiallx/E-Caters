@@ -199,7 +199,7 @@
             <android.support.v7.widget.CardView
             app:cardElevation="5dp"
             android:layout_width="match_parent"
-            android:layout_height="560dp">
+            android:layout_height="700dp">
 
                 <android.support.design.widget.TabLayout
                     android:layout_width="match_parent"

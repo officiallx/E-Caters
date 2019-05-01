@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.obnoxious.ecatering.R;
@@ -29,11 +31,24 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     Event event = new Event();
     Context c;
     String photoPath;
+    /*private OnItemClickListener onClickListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnClickListener(OnItemClickListener listener){
+
+        onClickListener = listener;
+
+    }*/
 
     public class HomeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView mImageView;
         public TextView mName, toolbar_title;
+        RelativeLayout rl_main;
+        CardView cv_home;
 
         public HomeViewHolder(View itemView) {
             super(itemView);
@@ -44,6 +59,33 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
             Typeface face = Typeface.createFromAsset(c.getAssets(), "font/CaviarDreams.ttf");
             mName.setTypeface(face);
+
+/*            rl_main = itemView.findViewById(R.id.rl_main);
+            rl_main.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onClickListener!=null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            onClickListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            cv_home = itemView.findViewById(R.id.cv_home);
+            cv_home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onClickListener!=null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            onClickListener.onItemClick(position);
+                        }
+                    }
+                }
+            });*/
+
         }
 
         public void bindMenu(Event menu){
@@ -52,8 +94,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             mName.setText(menuName);
 
             photoPath = (menu.getProfilePath());
-            Log.d("photopth", "bindMenu: "+photoPath);
 
+            //load photo from server
             Picasso.get().load(photoPath)
                     .fit()
                     .into(mImageView);
@@ -87,25 +129,29 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 if(position == 0){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Wedding");
-                    //i.putExtra("POSITION",position);
+                    String pos = Integer.toString(position);
+                    i.putExtra("POSITION",pos);
                     c.startActivity(i);
                 }
                 if(position == 1){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Birthday");
-                    //i.putExtra("POSITION",position);
+                    String pos = Integer.toString(position);
+                    i.putExtra("POSITION",pos);
                     c.startActivity(i);
                 }
                 if(position == 2){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Party");
-                    //i.putExtra("POSITION",position);
+                    String pos = Integer.toString(position);
+                    i.putExtra("POSITION",pos);
                     c.startActivity(i);
                 }
                 if(position == 3){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Funeral");
-                    //i.putExtra("POSITION",position);
+                    String pos = Integer.toString(position);
+                    i.putExtra("POSITION",pos);
                     c.startActivity(i);
                 }
                 Log.d("position", "onClick: "+ events.get(position));

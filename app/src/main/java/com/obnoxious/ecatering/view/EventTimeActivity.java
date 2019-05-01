@@ -57,6 +57,8 @@ public class EventTimeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         result = intent.getStringExtra("EXTRA_MESSAGE");
+        position = intent.getStringExtra("POSITION");
+
 
         txt_head.setText("When is the " + result);
 
@@ -179,23 +181,27 @@ public class EventTimeActivity extends AppCompatActivity {
     public void openNewActivity() {
 
         if (result.contains("Wedding")) {
-            Intent i = new Intent(EventTimeActivity.this, WeddingPackageActivity.class);
+            Intent i = new Intent(EventTimeActivity.this, PackageActivity.class);
             i.putExtra("EXTRA_MESSAGE", result);
+            i.putExtra("POSITION",position);
             startActivity(i);
             //imageView4.setImageResource(R.drawable.birthday);
         } else if (result.contains("Birthday")) {
-            Intent i = new Intent(EventTimeActivity.this, BirthdayPackageActivity.class);
+            Intent i = new Intent(EventTimeActivity.this, PackageActivity.class);
             i.putExtra("EXTRA_MESSAGE", result);
+            i.putExtra("POSITION",position);
             startActivity(i);
             //imageView4.setImageResource(R.drawable.birthday);
         } else if (result.contains("Party")) {
-            Intent i = new Intent(EventTimeActivity.this, PartyPackageActivity.class);
+            Intent i = new Intent(EventTimeActivity.this, PackageActivity.class);
             i.putExtra("EXTRA_MESSAGE", result);
+            i.putExtra("POSITION",position);
             startActivity(i);
             //imageView4.setImageResource(R.drawable.gathering);
         } else if (result.contains("Funeral")) {
-            Intent i = new Intent(EventTimeActivity.this, WeddingPackageActivity.class);
+            Intent i = new Intent(EventTimeActivity.this, PackageActivity.class);
             i.putExtra("EXTRA_MESSAGE", result);
+            i.putExtra("POSITION",position);
             startActivity(i);
             //imageView4.setImageResource(R.drawable.funeral);
         }

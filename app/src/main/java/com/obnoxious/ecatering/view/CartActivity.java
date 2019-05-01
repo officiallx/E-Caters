@@ -97,9 +97,6 @@ public class CartActivity extends AppCompatActivity {
 
                 saveOrder();
 
-                if (responseCode == 200){
-                    showPopup();
-                }
             }
         });
 
@@ -118,7 +115,10 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 responseCode = response.code();
-                Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
+                if (responseCode == 200){
+                    showPopup();
+                    Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

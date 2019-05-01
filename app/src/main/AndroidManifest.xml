@@ -30,9 +30,7 @@
         <activity android:name=".ui.WelcomeActivity" />
         <activity android:name=".ui.NoConnectionActivity" />
         <activity android:name=".view.EventTimeActivity" />
-        <activity android:name=".view.WeddingPackageActivity" />
-        <activity android:name=".view.BirthdayPackageActivity" />
-        <activity android:name=".view.PartyPackageActivity" />
+        <activity android:name=".view.PackageActivity" />
         <activity android:name=".view.PackageDetailsActivity" />
     </application>
 

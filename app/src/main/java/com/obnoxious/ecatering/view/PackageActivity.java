@@ -29,28 +29,38 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BirthdayPackageActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener, PackageAdapter.OnItemClickListener {
+public class PackageActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener, PackageAdapter.OnItemClickListener{
 
-    private final String baseUrl = "http://192.168.100.24:8080/"; // base url to connect to server
+    private final String baseUrl = "http:/192.168.100.24:8080/"; // base url to connect to server
     PackageAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
     TextView toolbar_title, txtFoodPackage;
-    List<Package> foods = new ArrayList<>();
     Intent intent = new Intent();
-    String result;
+    List<Package> foods;
+    String result,position;
+    Integer pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_birthday_package);
+        setContentView(R.layout.activity_package);
+
+        foods = new ArrayList<>();
 
         Intent intent = getIntent();
         result = intent.getStringExtra("EXTRA_MESSAGE");
+        position = intent.getStringExtra("POSITION");
+        try {
+            pos = Integer.parseInt(position);
+            Log.d("position", "wedding activity ko position : " + pos);
+        }catch (NumberFormatException ex){
+            Log.d("position", "onCreate: "+ex.getMessage());
+        }
 
-        mRecyclerView = findViewById(R.id.rv_drinks_menu);
+        mRecyclerView = findViewById(R.id.rv_food_menu);
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -67,7 +77,7 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
         setSupportActionBar(toolbar);
         //set title to toolbar
         toolbar_title = findViewById(R.id.toolbar_title);
-        toolbar_title.setText(result + " Package");
+        toolbar_title.setText(result+" Package");
 
         txtFoodPackage = findViewById(R.id.textView7);
 
@@ -84,6 +94,7 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
         swipeBackLayout.addView(view);
     }
 
+    //for swipe back
     private View getContainer() {
         RelativeLayout container = new RelativeLayout(this);
         swipeBackLayout = new SwipeBackLayout(this);
@@ -110,10 +121,10 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
     }
 
     //this is where it connects to the api
-    public void getAllItems() {
+    public void getAllItems(){
 
-        int eventId = intent.getIntExtra("POSITION", 2);
-        Long fId = (long) (eventId);
+        Long fId = (long) pos;
+        Log.d("position", "long positon: "+fId);
 
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -121,7 +132,7 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
                 .build();
 
         final PackageService packageService = retrofit.create(PackageService.class);
-        Call<List<Package>> lists = packageService.getAllMenu(fId);
+        Call<List<Package>> lists = packageService.getAllMenu(fId+1L);
         lists.enqueue(new Callback<List<Package>>() {
             @Override
             public void onResponse(Call<List<Package>> call, Response<List<Package>> response) {
@@ -129,7 +140,7 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
                     foods = response.body();
                     mAdapter = new PackageAdapter(foods);
                     mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.setOnClickListener(BirthdayPackageActivity.this);
+                    mAdapter.setOnClickListener(PackageActivity.this);
                     Log.d("Menu", "onResponse: " + foods);
                 }
             }
@@ -144,9 +155,10 @@ public class BirthdayPackageActivity extends AppCompatActivity implements SwipeB
 
     @Override
     public void onItemClick(int position) {
-        Intent i = new Intent(this, PackageDetailsActivity.class);
-        i.putExtra("Package_Name", foods.get(position).getPackageType());
-        i.putExtra("Package_Price", foods.get(position).getPackagePrice());
+        Intent i = new Intent(this,PackageDetailsActivity.class);
+        i.putExtra("Package_Id",String.valueOf(foods.get(position).getPackageId()));
+        i.putExtra("Package_Name",foods.get(position).getPackageType());
+        i.putExtra("Package_Price",foods.get(position).getPackagePrice());
         startActivity(i);
     }
 }

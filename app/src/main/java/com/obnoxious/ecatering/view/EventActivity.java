@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,9 @@ import com.obnoxious.ecatering.ui.NoConnectionActivity;
 public class EventActivity extends AppCompatActivity {
 
     ImageView imageView;
+    String user_id;
+    Bundle bundle;
+    Intent intent;
 
     boolean doubleBackToExitPressedOnce = false;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -34,6 +38,10 @@ public class EventActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     fragment = new HomeFragment();
+/*                    bundle = new Bundle();
+                    bundle.putString("USER_ID", intent.getStringExtra("user_id"));
+                    Log.d("username", "onNavigationItemSelected: "+bundle.toString());*/
+                    fragment.setArguments(bundle);
                     break;
                 case R.id.navigation_dashboard:
                     fragment = new OrderFragment();
@@ -53,6 +61,10 @@ public class EventActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+        user_id = intent.getStringExtra("USER_ID");
+        Log.d("username", "event activity ko id: "+user_id);
 
         //checks if there is internet connection or not if not it throws the alert dialog
         if (isNetworkConnectionAvailable()) {

@@ -19,6 +19,9 @@ public class Order {
     @SerializedName("eventAddress")
     @Expose
     private String eventAddress;
+    @SerializedName("userId")
+    @Expose
+    private String userId;
 
     public String getPackageName() {
         return packageName;
@@ -52,4 +55,11 @@ public class Order {
         this.orderId = orderId;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }
