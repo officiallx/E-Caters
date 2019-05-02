@@ -27,7 +27,6 @@ public class EventActivity extends AppCompatActivity {
     ImageView imageView;
     String user_id;
     Bundle bundle;
-    Intent intent;
 
     boolean doubleBackToExitPressedOnce = false;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -67,8 +66,11 @@ public class EventActivity extends AppCompatActivity {
         user_id = intent.getStringExtra("USER_ID");
         Log.d("username", "event activity ko id: "+user_id);
 
+/*        SharedPreferences eventDateId = getApplicationContext().getSharedPreferences("ORDER_ID", MODE_PRIVATE);
+        user_id = eventDateId.getString("USER_ORDER_ID", null);*/
+
         SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("USER_ID", MODE_PRIVATE).edit();
-        editor.putString("USER_ORDER_ID", user_id);
+        editor.putString("USER_ID", user_id);
         editor.apply();
 
         //checks if there is internet connection or not if not it throws the alert dialog

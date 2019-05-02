@@ -7,7 +7,13 @@ public class User {
 
     @SerializedName("id")
     @Expose
-    private int id;
+    private Integer id;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("contact")
+    @Expose
+    private Long contact;
     @SerializedName("username")
     @Expose
     private String username;
@@ -15,12 +21,28 @@ public class User {
     @Expose
     private String password;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getContact() {
+        return contact;
+    }
+
+    public void setContact(Long contact) {
+        this.contact = contact;
     }
 
     public String getUsername() {
@@ -38,4 +60,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

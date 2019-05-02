@@ -16,9 +16,15 @@ public class Order {
     @SerializedName("eventAddress")
     @Expose
     private String eventAddress;
+    @SerializedName("eventName")
+    @Expose
+    private String eventName;
+    @SerializedName("eventDateTime")
+    @Expose
+    private EventTime eventDateTime;
     @SerializedName("userId")
     @Expose
-    private Long userId;
+    private User userId;
     @SerializedName("orderId")
     @Expose
     private Integer orderId;
@@ -47,12 +53,12 @@ public class Order {
         this.eventAddress = eventAddress;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getEventName() {
+        return eventName;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
     public Integer getOrderId() {
@@ -63,4 +69,32 @@ public class Order {
         this.orderId = orderId;
     }
 
+    public EventTime getEventDateTime() {
+        return eventDateTime;
+    }
+
+    public void setEventDateTime(EventTime eventDateTime) {
+        this.eventDateTime = eventDateTime;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "packageName='" + packageName + '\'' +
+                ", eventVenue='" + eventVenue + '\'' +
+                ", eventAddress='" + eventAddress + '\'' +
+                ", eventName='" + eventName + '\'' +
+                ", eventDateTime=" + eventDateTime +
+                ", userId=" + userId +
+                ", orderId=" + orderId +
+                '}';
+    }
 }

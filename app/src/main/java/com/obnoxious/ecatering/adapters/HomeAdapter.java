@@ -37,6 +37,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     Event event = new Event();
     Context c,d;
     String photoPath, userId;
+    private static RecyclerView.RecyclerListener itemListener;
 
     /*private OnItemClickListener onClickListener;
 
@@ -68,7 +69,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             mName.setTypeface(face);
 
             SharedPreferences prefs = c.getSharedPreferences("USER_ID", MODE_PRIVATE);
-            userId = prefs.getString("USER_ORDER_ID",null);
+            userId = prefs.getString("USER_ID",null);
             Log.d("username", "home adapter ko user id woo hoo: "+userId);
 
 /*            cv_home = itemView.findViewById(R.id.cv_home);
@@ -102,6 +103,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         @Override
         public void onClick(View v) {
 
+            cv_home = itemView.findViewById(R.id.cv_home);
+
         }
     }
 
@@ -127,7 +130,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 if(position == 0){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Wedding");
-                    i.putExtra("USER_ID",userId);
                     String pos = Integer.toString(position);
                     i.putExtra("POSITION",pos);
                     c.startActivity(i);
@@ -135,7 +137,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 if(position == 1){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Birthday");
-                    i.putExtra("USER_ID",userId);
                     String pos = Integer.toString(position);
                     i.putExtra("POSITION",pos);
                     c.startActivity(i);
@@ -143,7 +144,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 if(position == 2){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Party");
-                    i.putExtra("USER_ID",userId);
                     String pos = Integer.toString(position);
                     i.putExtra("POSITION",pos);
                     c.startActivity(i);
@@ -151,7 +151,41 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 if(position == 3){
                     Intent i = new Intent(c, EventTimeActivity.class);
                     i.putExtra("EXTRA_MESSAGE","Funeral");
-                    i.putExtra("USER_ID",userId);
+                    String pos = Integer.toString(position);
+                    i.putExtra("POSITION",pos);
+                    c.startActivity(i);
+                }
+                if(position == 4){
+                    Intent i = new Intent(c, EventTimeActivity.class);
+                    i.putExtra("EXTRA_MESSAGE","Baby Shower");
+                    String pos = Integer.toString(position);
+                    i.putExtra("POSITION",pos);
+                    c.startActivity(i);
+                }
+                if(position == 5){
+                    Intent i = new Intent(c, EventTimeActivity.class);
+                    i.putExtra("EXTRA_MESSAGE","Gathering");
+                    String pos = Integer.toString(position);
+                    i.putExtra("POSITION",pos);
+                    c.startActivity(i);
+                }
+                if(position == 6){
+                    Intent i = new Intent(c, EventTimeActivity.class);
+                    i.putExtra("EXTRA_MESSAGE","Festival");
+                    String pos = Integer.toString(position);
+                    i.putExtra("POSITION",pos);
+                    c.startActivity(i);
+                }
+                if(position == 7){
+                    Intent i = new Intent(c, EventTimeActivity.class);
+                    i.putExtra("EXTRA_MESSAGE","Business");
+                    String pos = Integer.toString(position);
+                    i.putExtra("POSITION",pos);
+                    c.startActivity(i);
+                }
+                if(position == 8){
+                    Intent i = new Intent(c, EventTimeActivity.class);
+                    i.putExtra("EXTRA_MESSAGE","Other");
                     String pos = Integer.toString(position);
                     i.putExtra("POSITION",pos);
                     c.startActivity(i);

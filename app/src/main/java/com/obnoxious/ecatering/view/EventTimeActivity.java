@@ -3,9 +3,11 @@ package com.obnoxious.ecatering.view;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,7 +31,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EventTimeActivity extends AppCompatActivity {
 
-    private final String baseUrl = "http://192.168.100.24:8080/";
     TextView txtDate, txtTime, txtDateChoose, txtTimeChoose, txt_head;
     Calendar c;
     DatePickerDialog datePickerDialog;
@@ -37,7 +38,8 @@ public class EventTimeActivity extends AppCompatActivity {
     String format, userId;
     Button btn_wedding_next;
     EditText guest;
-    String result, event_date, event_time, guest_count, position;
+    String result, event_date, event_time, guest_count, position, eventdateId;
+    int event_dat_id;
     EventTime datetime = new EventTime();
 
     @Override
@@ -63,6 +65,10 @@ public class EventTimeActivity extends AppCompatActivity {
 
 
         txt_head.setText("When is the " + result);
+
+        SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("EVENT_NAME", MODE_PRIVATE).edit();
+        editor.putString("SELECTED_EVENT_NAME", result);
+        editor.apply();
 
         Typeface face = Typeface.createFromAsset(getAssets(), "font/CaviarDreams.ttf");
         txt_head.setTypeface(face);
@@ -116,7 +122,7 @@ public class EventTimeActivity extends AppCompatActivity {
 
         //set guest count to eventtime
         guest_count = (guest.getText().toString());
-        datetime.setGuest_count(guest_count);
+        datetime.setGuestCount(guest_count);
 
         btn_wedding_next = findViewById(R.id.btn_wedding_next);
         btn_wedding_next.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +130,7 @@ public class EventTimeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 guest_count = (guest.getText().toString());
-                datetime.setGuest_count(guest.getText().toString());
+                datetime.setGuestCount(guest.getText().toString());
 
                 try {
                     if (event_date != null && event_time != null && guest_count != null && Integer.valueOf(guest_count) > 0) {
@@ -158,20 +164,30 @@ public class EventTimeActivity extends AppCompatActivity {
 
     public void saveEventTime() {
 
-        Call<Void> eventTimeCall = RetrofitBuilder
+        Call<EventTime> eventTimeCall = RetrofitBuilder
                 .getInstance()
                 .eventTimeService()
                 .postEventTime(datetime);
-        eventTimeCall.enqueue(new Callback<Void>() {
+        eventTimeCall.enqueue(new Callback<EventTime>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<EventTime> call, Response<EventTime> response) {
 
-                openNewActivity();
-                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful()) {
+                    datetime = response.body();
+                    event_dat_id = response.body().getEventId();
+                    eventdateId = Integer.toString(event_dat_id);
+
+                    SharedPreferences.Editor eventDatId = getApplicationContext().getSharedPreferences("EVENT_DATE_TIME", MODE_PRIVATE).edit();
+                    eventDatId.putString("SELECTED_EVENT_TIME", eventdateId);
+                    eventDatId.apply();
+
+                    Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                    openNewActivity();
+                }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<EventTime> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
             }
         });
@@ -198,6 +214,36 @@ public class EventTimeActivity extends AppCompatActivity {
             startActivity(i);
             //imageView4.setImageResource(R.drawable.gathering);
         } else if (result.contains("Funeral")) {
+            Intent i = new Intent(EventTimeActivity.this, PackageActivity.class);
+            i.putExtra("EXTRA_MESSAGE", result);
+            i.putExtra("POSITION",position);
+            startActivity(i);
+            //imageView4.setImageResource(R.drawable.funeral);
+        } else if (result.contains("Baby Shower")) {
+            Intent i = new Intent(EventTimeActivity.this, PackageActivity.class);
+            i.putExtra("EXTRA_MESSAGE", result);
+            i.putExtra("POSITION",position);
+            startActivity(i);
+            //imageView4.setImageResource(R.drawable.funeral);
+        } else if (result.contains("Gathering")) {
+            Intent i = new Intent(EventTimeActivity.this, PackageActivity.class);
+            i.putExtra("EXTRA_MESSAGE", result);
+            i.putExtra("POSITION",position);
+            startActivity(i);
+            //imageView4.setImageResource(R.drawable.funeral);
+        } else if (result.contains("Festival")) {
+            Intent i = new Intent(EventTimeActivity.this, PackageActivity.class);
+            i.putExtra("EXTRA_MESSAGE", result);
+            i.putExtra("POSITION",position);
+            startActivity(i);
+            //imageView4.setImageResource(R.drawable.funeral);
+        } else if (result.contains("Business")) {
+            Intent i = new Intent(EventTimeActivity.this, PackageActivity.class);
+            i.putExtra("EXTRA_MESSAGE", result);
+            i.putExtra("POSITION",position);
+            startActivity(i);
+            //imageView4.setImageResource(R.drawable.funeral);
+        } else if (result.contains("Other")) {
             Intent i = new Intent(EventTimeActivity.this, PackageActivity.class);
             i.putExtra("EXTRA_MESSAGE", result);
             i.putExtra("POSITION",position);

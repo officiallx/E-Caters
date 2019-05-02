@@ -32,7 +32,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PackageActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener, PackageAdapter.OnItemClickListener{
 
-    private final String baseUrl = "http:/192.168.100.24:8080/"; // base url to connect to server
     PackageAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;

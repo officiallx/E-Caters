@@ -1,22 +1,22 @@
 package com.obnoxious.ecatering.models;
 
-/**
- * Created by Bleeding Rain on 4/21/2019.
- */
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class EventTime {
 
+    @SerializedName("eventDate")
+    @Expose
     private String eventDate;
+    @SerializedName("eventTime")
+    @Expose
     private String eventTime;
-    private String guest_count;
-
-//    public EventTime(int eventDatId, String eventDate, String eventTime, String guest_count) {
-//        this.eventDatId = eventDatId;
-//        this.eventDate = eventDate;
-//        this.eventTime = eventTime;
-//        this.guest_count = guest_count;
-//    }
-
+    @SerializedName("guest_count")
+    @Expose
+    private String guestCount;
+    @SerializedName("eventId")
+    @Expose
+    private Integer eventId;
 
     public String getEventDate() {
         return eventDate;
@@ -34,12 +34,20 @@ public class EventTime {
         this.eventTime = eventTime;
     }
 
-    public String getGuest_count() {
-        return guest_count;
+    public String getGuestCount() {
+        return guestCount;
     }
 
-    public void setGuest_count(String guest_count) {
-        this.guest_count = guest_count;
+    public void setGuestCount(String guestCount) {
+        this.guestCount = guestCount;
+    }
+
+    public Integer getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Integer eventId) {
+        this.eventId = eventId;
     }
 
     @Override
@@ -47,7 +55,8 @@ public class EventTime {
         return "EventTime{" +
                 "eventDate='" + eventDate + '\'' +
                 ", eventTime='" + eventTime + '\'' +
-                ", guest_count='" + guest_count + '\'' +
+                ", guestCount='" + guestCount + '\'' +
+                ", eventId=" + eventId +
                 '}';
     }
 }

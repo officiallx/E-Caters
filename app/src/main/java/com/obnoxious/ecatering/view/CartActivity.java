@@ -19,24 +19,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.obnoxious.ecatering.R;
+import com.obnoxious.ecatering.models.EventTime;
 import com.obnoxious.ecatering.models.Order;
 import com.obnoxious.ecatering.models.User;
-import com.obnoxious.ecatering.services.OrderService;
+import com.obnoxious.ecatering.utils.RetrofitBuilder;
 
 import java.util.ArrayList;
+import java.util.function.IntToLongFunction;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CartActivity extends AppCompatActivity {
 
-    final String baseUrl = "http://192.168.100.24:8080/";
     TextView txt_toolbar_title;
-    String packageName, eventVenue, eventAddress;
-    TextView cartName, txt_title, txt_title_detail;
+    String packageName, eventVenue, eventAddress, userId, eventName, eventdateId;
+    TextView cartName, txt_title, txt_title_detail, txtOrderId;
     ImageView img_close;
     EditText txtEventVenue, txtEventAddress;
     ArrayList<String> packageChosen;
@@ -44,8 +43,7 @@ public class CartActivity extends AppCompatActivity {
     Button btnPlaceOrder, btnDone;
     Order orders = new Order();
     Dialog successDialog;
-    int responseCode;
-    User user = new User();
+    int eventdateid, orderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +86,19 @@ public class CartActivity extends AppCompatActivity {
 
         // To load the data at a later time
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("USER_ID", MODE_PRIVATE);
-        final String loadedString = prefs.getString("USER_ORDER_ID", null);
-        Log.d("username", "cart ko user id woo hoo hooo ooo: "+loadedString);
+        final String loadedString = prefs.getString("USER_ID", null);
+        userId = loadedString;
+        Log.d("username", "cart ko user id woo hoo hooo ooo: " + loadedString);
+
+        //From EventTime activity
+        SharedPreferences eventname = getApplicationContext().getSharedPreferences("EVENT_NAME", MODE_PRIVATE);
+        eventName = eventname.getString("SELECTED_EVENT_NAME", null);
+
+        //From EventTime Activity
+        SharedPreferences eventDateId = getApplicationContext().getSharedPreferences("EVENT_DATE_TIME", MODE_PRIVATE);
+        eventdateId = eventDateId.getString("SELECTED_EVENT_TIME", null);
+        eventdateid = Integer.valueOf(eventdateId);
+        Log.d("username", "cart activity ko event date ko id : "+eventdateId);
 
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
@@ -98,11 +107,27 @@ public class CartActivity extends AppCompatActivity {
 
                 eventVenue = txtEventVenue.getText().toString();
                 eventAddress = txtEventAddress.getText().toString();
+                int id = Integer.valueOf(loadedString);
 
                 orders.setPackageName(packageName);
                 orders.setEventVenue(eventVenue);
                 orders.setEventAddress(eventAddress);
-                orders.setUserId(Long.valueOf(loadedString));
+                //orders.setUserId(Long.valueOf(loadedString));
+                User user = new User();
+                user.setId(id);
+                user.setUsername("");
+                user.setPassword("");
+                user.setContact(null);
+                user.setName("");
+                orders.setUserId(user);
+                orders.setEventName(eventName);
+
+                EventTime eventTime = new EventTime();
+                eventTime.setEventId(eventdateid);
+                eventTime.setEventDate("");
+                eventTime.setEventTime("");
+                eventTime.setGuestCount("");
+                orders.setEventDateTime(eventTime);
 
                 saveOrder();
 
@@ -113,44 +138,53 @@ public class CartActivity extends AppCompatActivity {
 
     private void saveOrder() {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        Call<Order> order = RetrofitBuilder
+                .getInstance()
+                .orderService()
+                .addOrder(orders);
 
-        OrderService orderService = retrofit.create(OrderService.class);
-        Call<Void> orderCall = orderService.addOrder(orders);
-        orderCall.enqueue(new Callback<Void>() {
+        order.enqueue(new Callback<Order>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                responseCode = response.code();
-                if (responseCode == 200){
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                if (response.isSuccessful()) {
+                    orders = response.body();
+                    orderId = orders.getOrderId();
+
+                    SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("ORDER_ID", MODE_PRIVATE).edit();
+                    editor.putString("USER_ORDER_ID", Integer.toString(orderId));
+                    editor.apply();
+
+                    Log.d("username", "User ko orderId: "+orderId);
                     showPopup();
                     Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<Order> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Failed" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
-    public void showPopup(){
+    public void showPopup() {
 
         successDialog.setContentView(R.layout.custompopup);
         img_close = successDialog.findViewById(R.id.popup_success_close);
         btnDone = successDialog.findViewById(R.id.btn_success_popup_done);
         txt_title = successDialog.findViewById(R.id.txt_success);
         txt_title_detail = successDialog.findViewById(R.id.txt_success_detail);
+        txtOrderId = successDialog.findViewById(R.id.txtOrderId);
+
+        txtOrderId.setText("Your Order Id is : "+orderId);
 
         img_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 successDialog.dismiss();
-                Intent i = new Intent(CartActivity.this,EventActivity.class);
+                Intent i = new Intent(CartActivity.this, EventActivity.class);
+                i.putExtra("USER_ID", userId);
                 startActivity(i);
             }
         });
@@ -162,7 +196,9 @@ public class CartActivity extends AppCompatActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(CartActivity.this,EventActivity.class);
+                Intent i = new Intent(CartActivity.this, EventActivity.class);
+                i.putExtra("USER_ID", userId);
+                i.putExtra("ORDER_ID", orderId);
                 startActivity(i);
             }
         });

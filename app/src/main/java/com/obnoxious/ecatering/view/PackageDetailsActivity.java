@@ -30,7 +30,6 @@ import java.util.List;
 
 public class PackageDetailsActivity extends AppCompatActivity {
 
-    //private final String baseUrl = "http://192.168.100.24:8080/"; // base url to connect to server
     TextView package_name, package_price, package_description;
     ImageView package_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -95,12 +94,6 @@ public class PackageDetailsActivity extends AppCompatActivity {
         adapter.AddFragment(new FragmentLunch(), "Lunch");
         adapter.AddFragment(new FragmentDinner(), "Dinner");
 
-
-/*        Fragment breakfastFragment = new FragmentBreakfast();
-        breakfastFragment.setArguments(id);
-        transaction.replace(R.id.fragment_container,breakfastFragment);
-        transaction.commit();*/
-
         //adapter setp
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -114,7 +107,7 @@ public class PackageDetailsActivity extends AppCompatActivity {
                 i.putExtra("PACKAGE_NAME", productName); // package name lai arko activity ma pass garney
                 i.putStringArrayListExtra("checked_boxes", checkedBox); // check box ko value cart activity ma array list ma halera lageko
                 startActivity(i);
-                Toast.makeText(getApplicationContext(), "Cart Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Cart Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 

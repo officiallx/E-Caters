@@ -50,12 +50,15 @@ public class RetrofitBuilder {
     public EventTimeService eventTimeService(){
         return retrofit.create(EventTimeService.class);
     }
+
     public OrderService orderService(){
         return retrofit.create(OrderService.class);
     }
+
     public PackageService packageService(){
         return retrofit.create(PackageService.class);
     }
+
     public BreakfastService breakfastService(){
         return retrofit.create(BreakfastService.class);
     }

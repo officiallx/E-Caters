@@ -1,5 +1,6 @@
 package com.obnoxious.ecatering.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,16 +18,19 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText txtUsername, txtPassword;
+    EditText txtName, txtContact, txtUsername, txtPassword;
     Button btnRegister;
     User user = new User();
-    String username, password;
+    String name, con, username, password;
+    Long contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        txtName = findViewById(R.id.txtName);
+        txtContact = findViewById(R.id.txtContact);
         txtUsername = findViewById(R.id.txtUsername);
         txtPassword = findViewById(R.id.txtPassword);
         btnRegister = findViewById(R.id.btnRegister);
@@ -35,6 +39,11 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                name = txtName.getText().toString();
+                user.setName(name);
+                con = txtContact.getText().toString();
+                contact = Long.valueOf(con);
+                user.setContact(contact);
                 username = txtUsername.getText().toString();
                 user.setUsername(username);
                 password = txtPassword.getText().toString();
@@ -47,7 +56,11 @@ public class RegisterActivity extends AppCompatActivity {
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        Toast.makeText(RegisterActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
+                        if (response.isSuccessful()){
+                            Intent i = new Intent(RegisterActivity.this,LoginActivity.class);
+                            startActivity(i);
+                            Toast.makeText(RegisterActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override

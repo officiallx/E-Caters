@@ -202,8 +202,3 @@ public class HomeFragment extends Fragment {
     }
 
 }
-/*
-        Log.d("username", "onItemClick: chaliracha");
-                Intent i = new Intent(c, EventTimeActivity.class);
-        i.putExtra("Event_Name", events.get(position).getEventName());
-        startActivity(i);*/

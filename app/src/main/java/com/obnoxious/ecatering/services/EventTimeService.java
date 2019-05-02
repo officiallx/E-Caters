@@ -17,7 +17,7 @@ public interface EventTimeService {
             "Content-Type: application/json"
     })
     @POST("api/datetime")
-    Call<Void> postEventTime(
+    Call<EventTime> postEventTime(
             @Body EventTime datetime
     );
 }
