@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.models.Order;
 import com.obnoxious.ecatering.utils.RetrofitBuilder;
+import com.obnoxious.ecatering.view.RegisterActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +31,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class OrderFragment extends Fragment {
 
     TextView txtEventName, txtEventPackage, txtEventDate, txtEventTime, txtEventVenue;
-    String eventdateId;
+    String eventdateId, tok;
     Long eventdateid;
     Order orders = new Order();
 
@@ -54,15 +55,17 @@ public class OrderFragment extends Fragment {
         txtEventTime = view.findViewById(R.id.event_Time);
         txtEventVenue = view.findViewById(R.id.event_venue);
 
-/*        SharedPreferences eventDateId = c.getSharedPreferences("ORDER_ID", MODE_PRIVATE);
+        SharedPreferences use_token = c.getSharedPreferences("USER_TOKEN", MODE_PRIVATE);
+        tok = use_token.getString("USER_TOKEN", null);
+
+        SharedPreferences eventDateId = c.getSharedPreferences("USER_ORDER_ID", MODE_PRIVATE);
         eventdateId = eventDateId.getString("USER_ORDER_ID", null);
         eventdateid = Long.valueOf(eventdateId);
-        Log.d("username", "order fragment ko event date id ho yo: "+eventdateId);*/
 
         final Call<Order> order = RetrofitBuilder
                 .getInstance()
                 .orderService()
-                .getOrderById(eventdateid);
+                .getOrderById(eventdateid,tok);
 
         order.enqueue(new Callback<Order>() {
             @Override
@@ -76,11 +79,14 @@ public class OrderFragment extends Fragment {
                     txtEventVenue.setText(orders.getEventVenue());
                     Log.d("username", "Mero Order haru ho yo: " + orders.toString());
                 }
+                else{
+                    Toast.makeText(c, "Order haru chaina tero kunai kei order gar ani feri herna aija", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onFailure(Call<Order> call, Throwable t) {
-
+                Log.d("order", "Failed " + t.getMessage());
             }
         });
 

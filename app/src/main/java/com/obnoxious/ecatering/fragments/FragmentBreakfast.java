@@ -2,6 +2,7 @@ package com.obnoxious.ecatering.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,15 +35,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class FragmentBreakfast extends Fragment {
 
-    private final String baseUrl = "http://192.168.100.24:8080/"; // base url to connect to server
     BreakfastAdapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     RecyclerView rv_breakfast;
     Context c;
     TextView mName;
-    String packageId;
+    String packageId,tok;
     Long packageid;
     int id;
     Bundle bundle = this.getArguments();
@@ -75,6 +77,9 @@ public class FragmentBreakfast extends Fragment {
         mAdapter = new BreakfastAdapter(breakfasts);
         rv_breakfast.setAdapter(mAdapter);
 
+        SharedPreferences use_token = c.getSharedPreferences("USER_TOKEN", MODE_PRIVATE);
+        tok = use_token.getString("USER_TOKEN", null);
+
         getAllBreakfast();
 
         return view;
@@ -87,7 +92,7 @@ public class FragmentBreakfast extends Fragment {
         Call<List<Breakfast>> breakfastCall = RetrofitBuilder
                 .getInstance()
                 .breakfastService()
-                .getAllBreakfast(packageid);
+                .getAllBreakfast(packageid,tok);
         breakfastCall.enqueue(new Callback<List<Breakfast>>() {
             @Override
             public void onResponse(Call<List<Breakfast>> call, Response<List<Breakfast>> response) {

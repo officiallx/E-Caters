@@ -34,16 +34,17 @@ import retrofit2.Response;
 public class CartActivity extends AppCompatActivity {
 
     TextView txt_toolbar_title;
-    String packageName, eventVenue, eventAddress, userId, eventName, eventdateId;
+    String packageName, eventVenue, eventAddress, userId, eventName, eventdateId, tok, venue, address, loadedString;
     TextView cartName, txt_title, txt_title_detail, txtOrderId;
-    ImageView img_close;
-    EditText txtEventVenue, txtEventAddress;
+    ImageView img_close, popup_event_close;
+    //EditText txtEventVenue, txtEventAddress;
     ArrayList<String> packageChosen;
     ListView lv_order;
-    Button btnPlaceOrder, btnDone;
+    Button btnPlaceOrder, btnDone, btn_event_done;
     Order orders = new Order();
-    Dialog successDialog;
+    Dialog successDialog, eventDialog;
     int eventdateid, orderId;
+    EditText txtEventAddress, txtEventVenue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +80,15 @@ public class CartActivity extends AppCompatActivity {
         lv_order = findViewById(R.id.lv_order);
         lv_order.setAdapter(arrayAdapter);
 
-        txtEventVenue = findViewById(R.id.txtEventVenue);
-        txtEventAddress = findViewById(R.id.txtEventAddress);
+        //txtEventVenue = findViewById(R.id.txtEventVenue);
+        //txtEventAddress = findViewById(R.id.txtEventAddress);
 
         successDialog = new Dialog(this);
+        eventDialog = new Dialog(this);
 
         // To load the data at a later time
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("USER_ID", MODE_PRIVATE);
-        final String loadedString = prefs.getString("USER_ID", null);
+        loadedString = prefs.getString("USER_ID", null);
         userId = loadedString;
         Log.d("username", "cart ko user id woo hoo hooo ooo: " + loadedString);
 
@@ -100,36 +102,42 @@ public class CartActivity extends AppCompatActivity {
         eventdateid = Integer.valueOf(eventdateId);
         Log.d("username", "cart activity ko event date ko id : "+eventdateId);
 
+        SharedPreferences use_token = this.getSharedPreferences("USER_TOKEN", MODE_PRIVATE);
+        tok = use_token.getString("USER_TOKEN", null);
+
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                eventVenue = txtEventVenue.getText().toString();
-                eventAddress = txtEventAddress.getText().toString();
-                int id = Integer.valueOf(loadedString);
+                showEventPopup();
 
-                orders.setPackageName(packageName);
-                orders.setEventVenue(eventVenue);
-                orders.setEventAddress(eventAddress);
-                //orders.setUserId(Long.valueOf(loadedString));
-                User user = new User();
-                user.setId(id);
-                user.setUsername("");
-                user.setPassword("");
-                user.setContact(null);
-                user.setName("");
-                orders.setUserId(user);
-                orders.setEventName(eventName);
 
-                EventTime eventTime = new EventTime();
-                eventTime.setEventId(eventdateid);
-                eventTime.setEventDate("");
-                eventTime.setEventTime("");
-                eventTime.setGuestCount("");
-                orders.setEventDateTime(eventTime);
+                    //eventVenue = txtEventVenue.getText().toString();
+                    //eventAddress = txtEventAddress.getText().toString();
+/*                    int id = Integer.valueOf(loadedString);
 
-                saveOrder();
+                    orders.setPackageName(packageName);
+                    orders.setEventVenue(venue);
+                    orders.setEventAddress(address);
+                    //orders.setUserId(Long.valueOf(loadedString));
+                    User user = new User();
+                    user.setId(id);
+                    user.setUsername("");
+                    user.setPassword("");
+                    user.setContact(null);
+                    user.setName("");
+                    orders.setUserId(user);
+                    orders.setEventName(eventName);
+
+                    EventTime eventTime = new EventTime();
+                    eventTime.setEventId(eventdateid);
+                    eventTime.setEventDate("");
+                    eventTime.setEventTime("");
+                    eventTime.setGuestCount("");
+                    orders.setEventDateTime(eventTime);
+
+                    saveOrder();*/
 
             }
         });
@@ -141,7 +149,7 @@ public class CartActivity extends AppCompatActivity {
         Call<Order> order = RetrofitBuilder
                 .getInstance()
                 .orderService()
-                .addOrder(orders);
+                .addOrder(orders,tok);
 
         order.enqueue(new Callback<Order>() {
             @Override
@@ -150,7 +158,7 @@ public class CartActivity extends AppCompatActivity {
                     orders = response.body();
                     orderId = orders.getOrderId();
 
-                    SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("ORDER_ID", MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("USER_ORDER_ID", MODE_PRIVATE).edit();
                     editor.putString("USER_ORDER_ID", Integer.toString(orderId));
                     editor.apply();
 
@@ -200,6 +208,66 @@ public class CartActivity extends AppCompatActivity {
                 i.putExtra("USER_ID", userId);
                 i.putExtra("ORDER_ID", orderId);
                 startActivity(i);
+            }
+        });
+    }
+
+    public void showEventPopup() {
+
+        eventDialog.setContentView(R.layout.custome_event_address_popup);
+        popup_event_close = eventDialog.findViewById(R.id.popup_event_close);
+        btn_event_done = eventDialog.findViewById(R.id.btn_event_popup_done);
+        txtEventAddress = eventDialog.findViewById(R.id.txtEventAddress);
+        txtEventVenue = eventDialog.findViewById(R.id.txtEventVenue);
+
+        popup_event_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventDialog.dismiss();
+            }
+        });
+
+        eventDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        eventDialog.show();
+
+        btn_event_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                address = txtEventAddress.getText().toString();
+                venue = txtEventVenue.getText().toString();
+
+/*                SharedPreferences.Editor addresses = getApplicationContext().getSharedPreferences("EVENT_ADDRESS", MODE_PRIVATE).edit();
+                addresses.putString("EVENT_ADDRESS", address);
+                addresses.apply();
+
+                SharedPreferences.Editor venues = getApplicationContext().getSharedPreferences("EVENT_VENUE", MODE_PRIVATE).edit();
+                venues.putString("EVENT_VENUE", venue);
+                venues.apply();*/
+
+                int id = Integer.valueOf(loadedString);
+
+                orders.setPackageName(packageName);
+                orders.setEventVenue(venue);
+                orders.setEventAddress(address);
+                //orders.setUserId(Long.valueOf(loadedString));
+                User user = new User();
+                user.setId(id);
+                user.setUsername("");
+                user.setPassword("");
+                user.setContact(null);
+                user.setName("");
+                orders.setUserId(user);
+                orders.setEventName(eventName);
+
+                EventTime eventTime = new EventTime();
+                eventTime.setEventId(eventdateid);
+                eventTime.setEventDate("");
+                eventTime.setEventTime("");
+                eventTime.setGuestCount("");
+                orders.setEventDateTime(eventTime);
+
+                saveOrder();
             }
         });
     }

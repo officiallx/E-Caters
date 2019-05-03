@@ -77,9 +77,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     Headers headers = response.headers();
-                    headers.toString();
-                    Log.d("username", "login ko token: " + headers.get("Authorization"));
+                    String header = headers.get("Authorization");
 
+                    SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("USER_TOKEN", MODE_PRIVATE).edit();
+                    editor.putString("USER_TOKEN", header);
+                    editor.apply();
 
                     if (userId != null) {
                         startNewActivity();

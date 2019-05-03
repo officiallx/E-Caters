@@ -1,6 +1,7 @@
 package com.obnoxious.ecatering.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,7 +41,7 @@ public class PackageActivity extends AppCompatActivity implements SwipeBackLayou
     TextView toolbar_title, txtFoodPackage;
     Intent intent = new Intent();
     List<Package> foods;
-    String result,position;
+    String result,position,tok;
     Integer pos;
 
     @Override
@@ -68,6 +69,9 @@ public class PackageActivity extends AppCompatActivity implements SwipeBackLayou
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new PackageAdapter(foods);
 
+        SharedPreferences use_token = this.getSharedPreferences("USER_TOKEN", MODE_PRIVATE);
+        tok = use_token.getString("USER_TOKEN", null);
+
         getAllItems();
 
         //swipe back implementation
@@ -84,6 +88,7 @@ public class PackageActivity extends AppCompatActivity implements SwipeBackLayou
         Typeface face = Typeface.createFromAsset(getAssets(), "font/CaviarDreams.ttf");
         toolbar_title.setTypeface(face);
         txtFoodPackage.setTypeface(face);
+
 
     }
 
@@ -129,7 +134,7 @@ public class PackageActivity extends AppCompatActivity implements SwipeBackLayou
         Call<List<Package>> lists = RetrofitBuilder
                 .getInstance()
                 .packageService()
-                .getAllMenu(fId+1L);
+                .getAllMenu(fId+1L,tok);
         lists.enqueue(new Callback<List<Package>>() {
             @Override
             public void onResponse(Call<List<Package>> call, Response<List<Package>> response) {

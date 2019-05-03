@@ -103,11 +103,16 @@ public class PackageDetailsActivity extends AppCompatActivity {
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                i = new Intent(PackageDetailsActivity.this, CartActivity.class);
-                i.putExtra("PACKAGE_NAME", productName); // package name lai arko activity ma pass garney
-                i.putStringArrayListExtra("checked_boxes", checkedBox); // check box ko value cart activity ma array list ma halera lageko
-                startActivity(i);
-                //Toast.makeText(getApplicationContext(), "Cart Clicked", Toast.LENGTH_SHORT).show();
+                if (checkedBox!=null) {
+                    i = new Intent(PackageDetailsActivity.this, CartActivity.class);
+                    i.putExtra("PACKAGE_NAME", productName); // package name lai arko activity ma pass garney
+                    i.putStringArrayListExtra("checked_boxes", checkedBox); // check box ko value cart activity ma array list ma halera lageko
+                    startActivity(i);
+                    //Toast.makeText(getApplicationContext(), "Cart Clicked", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -2,6 +2,7 @@ package com.obnoxious.ecatering.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by Bleeding Rain on 4/17/2019.
  */
@@ -57,6 +60,7 @@ public class HomeFragment extends Fragment {
     TextView toolbar_title, txt_slogan;
     String user_id;
     CardView cv_home;
+    String user_token;
 
     List<Event> events = new ArrayList();
 
@@ -93,6 +97,11 @@ public class HomeFragment extends Fragment {
         for (int image : images) {
             flipperImages(image);
         }
+
+        SharedPreferences use_token = c.getSharedPreferences("USER_TOKEN", MODE_PRIVATE);
+        user_token = use_token.getString("USER_TOKEN", null);
+        Log.d("username", "user ko token home fragment ko: " + user_token);
+
 
         //pull to refresh implement
         swipeRefreshLayout = view.findViewById(R.id.swipe_home);
@@ -154,7 +163,9 @@ public class HomeFragment extends Fragment {
         Call<List<Event>> eventCall = RetrofitBuilder
                 .getInstance()
                 .eventService()
-                .getAllMenu();
+                .getAllMenu(user_token);
+
+        Log.d("token", "getAllEvents: "+user_token);
 
         eventCall.enqueue(new Callback<List<Event>>() {
             @Override

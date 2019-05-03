@@ -38,7 +38,7 @@ public class EventTimeActivity extends AppCompatActivity {
     String format, userId;
     Button btn_wedding_next;
     EditText guest;
-    String result, event_date, event_time, guest_count, position, eventdateId;
+    String result, event_date, event_time, guest_count, position, eventdateId, tok;
     int event_dat_id;
     EventTime datetime = new EventTime();
 
@@ -69,6 +69,9 @@ public class EventTimeActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("EVENT_NAME", MODE_PRIVATE).edit();
         editor.putString("SELECTED_EVENT_NAME", result);
         editor.apply();
+
+        SharedPreferences use_token = this.getSharedPreferences("USER_TOKEN", MODE_PRIVATE);
+        tok = use_token.getString("USER_TOKEN", null);
 
         Typeface face = Typeface.createFromAsset(getAssets(), "font/CaviarDreams.ttf");
         txt_head.setTypeface(face);
@@ -167,7 +170,7 @@ public class EventTimeActivity extends AppCompatActivity {
         Call<EventTime> eventTimeCall = RetrofitBuilder
                 .getInstance()
                 .eventTimeService()
-                .postEventTime(datetime);
+                .postEventTime(datetime,tok);
         eventTimeCall.enqueue(new Callback<EventTime>() {
             @Override
             public void onResponse(Call<EventTime> call, Response<EventTime> response) {

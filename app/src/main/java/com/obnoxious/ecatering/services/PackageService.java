@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Path;
 
 /**
@@ -16,12 +17,14 @@ public interface PackageService {
 
     @GET("api/event/{eventId}/packages")
     Call<List<Package>> getAllMenu(
-            @Path("eventId") Long eventId
+            @Path("eventId") Long eventId,
+            @Header("Authorization") String authHeader
     );
 
     @GET("api/event/{eventId}/package/{packageId}")
     Call<List<Package>> getPackagebyId(
             @Path("eventId") Long eventId,
-            @Path("packageId") Long packageId
+            @Path("packageId") Long packageId,
+            @Header("Authorization") String authHeader
     );
 }
