@@ -4,46 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.RegisterActivity"
-    android:orientation="vertical"
+    android:layout_gravity="center"
     android:gravity="center"
-    android:layout_gravity="center">
+    android:orientation="vertical"
+    tools:context=".view.RegisterActivity">
 
-    <EditText
-        android:id="@+id/txtName"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Name"/>
+        android:layout_margin="10dp"
+        android:padding="150dp">
 
-    <EditText
-        android:id="@+id/txtContact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:hint="Contact Number"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/txtUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Username"/>
+            <EditText
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                android:drawableLeft="@drawable/ic_username"
+                android:drawablePadding="20dp"
+                android:layout_margin="10dp"/>
 
-    <EditText
-        android:id="@+id/txtPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Password"/>
+            <EditText
+                android:id="@+id/txtContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Contact Number"
+                android:inputType="number"
+                android:drawableLeft="@drawable/ic_local_phone_black_24dp"
+                android:drawablePadding="20dp"
+                android:layout_margin="10dp"/>
+
+            <EditText
+                android:id="@+id/txtUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:drawableLeft="@drawable/ic_username"
+                android:drawablePadding="20dp"
+                android:layout_margin="10dp"/>
+
+            <EditText
+                android:id="@+id/txtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:drawableLeft="@drawable/ic_password"
+                android:drawablePadding="20dp"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Register"/>
+        android:layout_marginTop="80dp"
+        android:text="Register"
+        android:textSize="18dp"
+        android:fontFamily="@font/caviar_dreams"/>
+
 </LinearLayout>
