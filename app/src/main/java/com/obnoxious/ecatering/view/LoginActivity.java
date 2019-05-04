@@ -2,6 +2,7 @@ package com.obnoxious.ecatering.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.models.User;
+import com.obnoxious.ecatering.ui.NoConnectionActivity;
 import com.obnoxious.ecatering.utils.RetrofitBuilder;
 
 import okhttp3.Headers;
@@ -35,26 +37,29 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        txtUsername = findViewById(R.id.txtUsername);
-        txtPassword = findViewById(R.id.txtPassword);
-        btnLogin = findViewById(R.id.btnLogin);
+        if (isNetworkConnectionAvailable()) {
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
+            txtUsername = findViewById(R.id.txtUsername);
+            txtPassword = findViewById(R.id.txtPassword);
+            btnLogin = findViewById(R.id.btnLogin);
 
-            }
-        });
+            btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    login();
 
-        btnNewRegister = findViewById(R.id.btnNewRegister);
-        btnNewRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(i);
-            }
-        });
+                }
+            });
+
+            btnNewRegister = findViewById(R.id.btnNewRegister);
+            btnNewRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
     }
 
 
@@ -131,6 +136,26 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //checks if internet connection is available or not
+    public boolean isNetworkConnectionAvailable(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(EventActivity.CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo wifi = cm
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        android.net.NetworkInfo datac = cm
+                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if ((wifi != null & datac != null)
+                && (wifi.isConnected() | datac.isConnected())) {
+            //connection is avlilable
+            return true;
+        }else{
+            //no connection
+            Toast toast = Toast.makeText(this, "No Internet Connection",
+                   Toast.LENGTH_LONG);
+            toast.show();
+            return false;
+        }
     }
 
 }
