@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class CartActivity extends AppCompatActivity {
     Dialog successDialog, eventDialog;
     int eventdateid, orderId;
     EditText txtEventAddress, txtEventVenue;
+    String listString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,11 @@ public class CartActivity extends AppCompatActivity {
         packageChosen = intent.getStringArrayListExtra("checked_boxes"); // checkbox value get from product detail activity
 
         packageName = intent.getExtras().getString("PACKAGE_NAME"); // get package name from package detail activity
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            listString = String.join(",", packageChosen);
+            Log.d("username", "cart ko selected packages: "+listString);
+        }
 
         Typeface face = Typeface.createFromAsset(getAssets(), "font/CaviarDreams.ttf");
 
@@ -266,6 +273,7 @@ public class CartActivity extends AppCompatActivity {
                 eventTime.setEventTime("");
                 eventTime.setGuestCount("");
                 orders.setEventDateTime(eventTime);
+                orders.setSelectedService(listString);
 
                 saveOrder();
             }

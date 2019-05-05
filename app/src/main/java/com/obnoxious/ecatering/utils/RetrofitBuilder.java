@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitBuilder {
 
-    private final String baseUrl = "http://192.168.100.24:8080/";
+    private final String baseUrl = "http://100.64.205.157:8080/";
     private static RetrofitBuilder mInstance;
     private Retrofit retrofit;
     String user_token;

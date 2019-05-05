@@ -22,6 +22,9 @@ public class Order {
     @SerializedName("eventDateTime")
     @Expose
     private EventTime eventDateTime;
+    @SerializedName("selectedService")
+    @Expose
+    private String selectedService;
     @SerializedName("userId")
     @Expose
     private User userId;
@@ -96,5 +99,13 @@ public class Order {
                 ", userId=" + userId +
                 ", orderId=" + orderId +
                 '}';
+    }
+
+    public String getSelectedService() {
+        return selectedService;
+    }
+
+    public void setSelectedService(String selectedService) {
+        this.selectedService = selectedService;
     }
 }
