@@ -3,12 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
         <RelativeLayout
             android:id="@+id/rl_main"
             android:layout_width="match_parent"
@@ -61,7 +55,5 @@
                 <!--android:text="@string/your_latest_updates_will_be_here"/>-->
 
         </RelativeLayout>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

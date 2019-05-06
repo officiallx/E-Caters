@@ -79,7 +79,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.HomeView
             String guests = aPackage.getPackagePrice();
             mName.setText(menuName);
             food_description.setText(description);
-            food_package_guests.setText("Rs. "+guests);
+            food_package_guests.setText("Rs. "+guests+" per guest");
 
             photoPath = (aPackage.getProfilePath());
 

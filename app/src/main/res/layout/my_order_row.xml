@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtOrderId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/round_background"
+                android:padding="5dp"
+                android:text="Order Id"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/txtEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtOrderId"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/caviar_dreams"
+                android:text="Wedding"
+                android:textSize="18dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/lblSelectedPackage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/round_background"
+                android:padding="5dp"
+                android:text="Selected Package"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/txtSelectedPackage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblEvent"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:fontFamily="@font/caviar_dreams"
+                android:text="Small Package"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:text="Date"
+                    android:textSize="14dp"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:text="Time"
+                    android:textAlignment="center"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtEventDate"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:text="20/10/2020"
+                    android:textSize="18dp"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:id="@+id/txtEventTime"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:text="6:00 PM"
+                    android:textAlignment="center"
+                    android:textSize="18dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:text="Event Address: "
+                    android:fontFamily="@font/caviar_dreams"/>
+
+                <TextView
+                    android:id="@+id/txtEventAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblEvent"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:text="Home"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:text="Event Venue: "
+                    android:fontFamily="@font/caviar_dreams"/>
+
+                <TextView
+                    android:id="@+id/txtEventVenue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblEvent"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/caviar_dreams"
+                    android:text="Kirtipur"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

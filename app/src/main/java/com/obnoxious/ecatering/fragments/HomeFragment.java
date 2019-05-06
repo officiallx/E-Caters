@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ViewFlipper v_flipper;
     Context c;
-    private SwipeRefreshLayout swipeRefreshLayout;
+//    private SwipeRefreshLayout swipeRefreshLayout;
     RelativeLayout relativeLayout;
     TextView toolbar_title, txt_slogan;
     String user_id;
@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
         Log.d("username", "user ko token home fragment ko: " + user_token);
 
 
-        //pull to refresh implement
+/*        //pull to refresh implement
         swipeRefreshLayout = view.findViewById(R.id.swipe_home);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -118,7 +118,7 @@ public class HomeFragment extends Fragment {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
-        });
+        });*/
 
 
         mRecyclerView = view.findViewById(R.id.rv_home);
