@@ -1,11 +1,13 @@
 package com.obnoxious.ecatering.view;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.obnoxious.ecatering.R;
@@ -23,11 +25,17 @@ public class RegisterActivity extends AppCompatActivity {
     User user = new User();
     String name, con, username, password;
     Long contact;
+    TextView txt_toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Typeface face = Typeface.createFromAsset(getAssets(), "font/CaviarDreams.ttf");
+        txt_toolbar_title = findViewById(R.id.toolbar_title);
+        txt_toolbar_title.setText("My Order");
+        txt_toolbar_title.setTypeface(face);
 
         txtName = findViewById(R.id.txtName);
         txtContact = findViewById(R.id.txtContact);

@@ -88,6 +88,10 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("USER_TOKEN", header);
                     editor.apply();
 
+                    SharedPreferences.Editor user = getApplicationContext().getSharedPreferences("USERNAME", MODE_PRIVATE).edit();
+                    user.putString("USERNAME", username);
+                    user.apply();
+
                     if (userId != null) {
                         startNewActivity();
                         Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();

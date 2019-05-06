@@ -1,9 +1,11 @@
 package com.obnoxious.ecatering.utils;
 
 import com.obnoxious.ecatering.services.BreakfastService;
+import com.obnoxious.ecatering.services.DinnerService;
 import com.obnoxious.ecatering.services.EventService;
 import com.obnoxious.ecatering.services.EventTimeService;
 import com.obnoxious.ecatering.services.LoginService;
+import com.obnoxious.ecatering.services.LunchService;
 import com.obnoxious.ecatering.services.OrderService;
 import com.obnoxious.ecatering.services.PackageService;
 import com.obnoxious.ecatering.services.RegisterService;
@@ -23,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitBuilder {
 
-    private final String baseUrl = "http://100.64.205.157:8080/";
+    private final String baseUrl = "http://192.168.100.24:8080/";
     private static RetrofitBuilder mInstance;
     private Retrofit retrofit;
     String user_token;
@@ -80,5 +82,9 @@ public class RetrofitBuilder {
     public BreakfastService breakfastService(){
         return retrofit.create(BreakfastService.class);
     }
+
+    public LunchService lunchService(){return retrofit.create(LunchService.class);}
+
+    public DinnerService dinnerService(){return retrofit.create(DinnerService.class);}
 
 }

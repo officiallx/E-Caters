@@ -119,33 +119,6 @@ public class CartActivity extends AppCompatActivity {
 
                 showEventPopup();
 
-
-                    //eventVenue = txtEventVenue.getText().toString();
-                    //eventAddress = txtEventAddress.getText().toString();
-/*                    int id = Integer.valueOf(loadedString);
-
-                    orders.setPackageName(packageName);
-                    orders.setEventVenue(venue);
-                    orders.setEventAddress(address);
-                    //orders.setUserId(Long.valueOf(loadedString));
-                    User user = new User();
-                    user.setId(id);
-                    user.setUsername("");
-                    user.setPassword("");
-                    user.setContact(null);
-                    user.setName("");
-                    orders.setUserId(user);
-                    orders.setEventName(eventName);
-
-                    EventTime eventTime = new EventTime();
-                    eventTime.setEventId(eventdateid);
-                    eventTime.setEventDate("");
-                    eventTime.setEventTime("");
-                    eventTime.setGuestCount("");
-                    orders.setEventDateTime(eventTime);
-
-                    saveOrder();*/
-
             }
         });
 

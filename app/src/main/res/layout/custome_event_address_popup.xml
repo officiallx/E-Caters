@@ -42,12 +42,12 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/event_address"
-                android:drawableLeft="@drawable/ic_location_city_black_24dp"
                 android:drawablePadding="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/caviar_dreams"/>
+                android:fontFamily="@font/caviar_dreams"
+                android:drawableLeft="@drawable/ic_location_on_black_24dp"/>
 
             <EditText
                 android:id="@+id/txtEventVenue"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/event_venue"
-                android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                android:drawableLeft="@drawable/ic_location_city_black_24dp"
                 android:drawablePadding="15dp"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/caviar_dreams"/>
