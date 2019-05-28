@@ -3,6 +3,7 @@ package com.obnoxious.ecatering.adapters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     RelativeLayout rl_orders;
     ImageView imgRemove;
     Long orderid;
+    CardView cv_order;
 
     private OrderAdapter.OnItemClickListener onClickListener;
 
@@ -64,6 +66,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             txtEventAddress = itemView.findViewById(R.id.txtEventAddress);
             rl_orders = itemView.findViewById(R.id.rl_order);
             imgRemove = itemView.findViewById(R.id.imgRemove);
+            cv_order = itemView.findViewById(R.id.cv_order);
 
             SharedPreferences use_token = c.getSharedPreferences("USER_TOKEN", MODE_PRIVATE);
             tok = use_token.getString("USER_TOKEN", null);
@@ -111,7 +114,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 txtEventTime.setText("");
                 txtEventAddress.setText("");
                 txtEventVenue.setText("");
-                rl_orders.setVisibility(View.GONE);
+                cv_order.setVisibility(View.GONE);
+                Toast.makeText(c, "No Orders! Why dont you order somthing first.", Toast.LENGTH_LONG).show();
             }
 
         }
@@ -141,6 +145,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             @Override
             public void onClick(View v) {
                 removeOrder();
+                cv_order.setVisibility(View.GONE);
             }
         });
     }
@@ -161,7 +166,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 @Override
                 public void onResponse(Call<Order> call, Response<Order> response) {
                     Toast.makeText(c, "Removed", Toast.LENGTH_LONG).show();
-                    rl_orders.setVisibility(View.GONE);
+                    cv_order.setVisibility(View.GONE);
                 }
 
                 @Override

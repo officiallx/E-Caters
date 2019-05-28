@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -49,7 +50,6 @@ public class OrderFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     List<Order> orderList;
-    ImageView imgRemove;
 
     Context c;
     TextView txt_toolbar_title;
@@ -90,12 +90,13 @@ public class OrderFragment extends Fragment {
         //mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mRecyclerView.setLayoutManager(mLayoutManager);
         orderAdapter = new OrderAdapter(orderList);
+        //mRecyclerView.setVisibility(View.INVISIBLE);
 
         if (orderid!=null) {
             getOrders();
         }
         else{
-            mRecyclerView.setVisibility(View.VISIBLE);
+            //mRecyclerView.setVisibility(View.GONE);
             Toast.makeText(c, "No orders", Toast.LENGTH_SHORT).show();
         }
 
