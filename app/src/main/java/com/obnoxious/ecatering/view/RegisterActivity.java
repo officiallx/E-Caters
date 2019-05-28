@@ -24,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnRegister;
     User user = new User();
     String name, con, username, password;
-    Long contact;
+    Long contact = 0L;
     TextView txt_toolbar_title;
 
     @Override
@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Typeface face = Typeface.createFromAsset(getAssets(), "font/CaviarDreams.ttf");
         txt_toolbar_title = findViewById(R.id.toolbar_title);
-        txt_toolbar_title.setText("My Order");
+        txt_toolbar_title.setText("Register");
         txt_toolbar_title.setTypeface(face);
 
         txtName = findViewById(R.id.txtName);
@@ -48,38 +48,47 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 name = txtName.getText().toString();
-                user.setName(name);
                 con = txtContact.getText().toString();
                 contact = Long.valueOf(con);
-                user.setContact(contact);
                 username = txtUsername.getText().toString();
-                user.setUsername(username);
                 password = txtPassword.getText().toString();
+                user.setName(name);
+                user.setContact(contact);
+                user.setUsername(username);
                 user.setPassword(password);
 
-                Call<Void> call = RetrofitBuilder
-                        .getInstance()
-                        .registerService()
-                        .register(user);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.isSuccessful()){
-                            Intent i = new Intent(RegisterActivity.this,LoginActivity.class);
-                            startActivity(i);
-                            Toast.makeText(RegisterActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                if (name != null && !name.isEmpty() && username != null && !username.isEmpty() && con!=null && contact!=0) {
 
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    register();
 
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"Fields cannot be empty",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    void register(){
+        Call<Void> call = RetrofitBuilder
+                .getInstance()
+                .registerService()
+                .register(user);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(i);
+                    Toast.makeText(RegisterActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }

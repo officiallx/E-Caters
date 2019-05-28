@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -26,6 +27,12 @@ public interface OrderService {
 
     @GET("api/order/{orderId}")
     Call<Order> getOrderById(
+            @Path("orderId") Long orderId,
+            @Header("Authorization") String authHeader
+    );
+
+    @DELETE("api/order/{orderId}")
+    Call<Order> deleteOrderbyId(
             @Path("orderId") Long orderId,
             @Header("Authorization") String authHeader
     );

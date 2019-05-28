@@ -184,7 +184,7 @@ public class EventTimeActivity extends AppCompatActivity {
                     eventDatId.putString("SELECTED_EVENT_TIME", eventdateId);
                     eventDatId.apply();
 
-                    Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
                     openNewActivity();
                 }
             }

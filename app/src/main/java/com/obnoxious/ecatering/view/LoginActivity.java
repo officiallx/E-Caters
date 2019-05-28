@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.obnoxious.ecatering.R;
@@ -25,7 +26,8 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     EditText txtUsername, txtPassword;
-    Button btnLogin, btnNewRegister;
+    TextView btnNewRegister;
+    Button btnLogin;
     User user = new User();
     int responseCode;
     String userId, username;

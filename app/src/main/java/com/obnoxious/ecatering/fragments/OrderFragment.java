@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class OrderFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     List<Order> orderList;
+    ImageView imgRemove;
 
     Context c;
     TextView txt_toolbar_title;
@@ -89,11 +91,18 @@ public class OrderFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         orderAdapter = new OrderAdapter(orderList);
 
-        getOrders();
+        if (orderid!=null) {
+            getOrders();
+        }
+        else{
+            mRecyclerView.setVisibility(View.VISIBLE);
+            Toast.makeText(c, "No orders", Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }
 
+    //order method
     void getOrders(){
         final Call<Order> order = RetrofitBuilder
                 .getInstance()
@@ -108,10 +117,10 @@ public class OrderFragment extends Fragment {
                     orderList = Collections.singletonList(response.body());
                     orderAdapter = new OrderAdapter(orderList);
                     mRecyclerView.setAdapter(orderAdapter);
-                    Log.d("username", "Mero Order haru ho yo: " + orders.toString());
+                    mRecyclerView.setVisibility(View.VISIBLE);
                 }
                 else{
-                    Toast.makeText(c, "Order haru chaina tero kunai kei order gar ani feri herna aija", Toast.LENGTH_LONG).show();
+                    Toast.makeText(c, "No Orders", Toast.LENGTH_LONG).show();
                 }
             }
 

@@ -28,18 +28,6 @@ public class RetrofitBuilder {
     private final String baseUrl = "http://192.168.100.24:8080/";
     private static RetrofitBuilder mInstance;
     private Retrofit retrofit;
-    String user_token;
-
-/*    OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request newRequest  = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer " + user_token)
-                    .build();
-            return chain.proceed(newRequest);
-        }
-    }).build();*/
-
 
     private RetrofitBuilder() {
         retrofit = new Retrofit.Builder()
