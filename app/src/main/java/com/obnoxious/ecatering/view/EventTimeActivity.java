@@ -135,6 +135,10 @@ public class EventTimeActivity extends AppCompatActivity {
                 guest_count = (guest.getText().toString());
                 datetime.setGuestCount(guest.getText().toString());
 
+                SharedPreferences.Editor guest = getApplicationContext().getSharedPreferences("GUEST_COUNT", MODE_PRIVATE).edit();
+                guest.putString("GUEST_COUNT", guest_count);
+                guest.apply();
+
                 try {
                     if (event_date != null && event_time != null && guest_count != null && Integer.valueOf(guest_count) > 0) {
 

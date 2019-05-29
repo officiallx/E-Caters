@@ -62,6 +62,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+        else {
+            Toast.makeText(getApplicationContext(),"No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

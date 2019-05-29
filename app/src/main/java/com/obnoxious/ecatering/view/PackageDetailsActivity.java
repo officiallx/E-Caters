@@ -1,6 +1,7 @@
 package com.obnoxious.ecatering.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -83,6 +84,10 @@ public class PackageDetailsActivity extends AppCompatActivity {
 
         package_name.setText(productName);
         package_price.setText(productPrice);
+
+        SharedPreferences.Editor price = getApplicationContext().getSharedPreferences("ORDER_PRICE", MODE_PRIVATE).edit();
+        price.putString("ORDER_PRICE", productPrice);
+        price.apply();
 
         tabLayout = findViewById(R.id.tablayout_id);
         viewPager = findViewById(R.id.viewpager_id);

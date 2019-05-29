@@ -36,7 +36,7 @@ public class CartActivity extends AppCompatActivity {
 
     TextView txt_toolbar_title;
     String packageName, eventVenue, eventAddress, userId, eventName, eventdateId, tok, venue, address, loadedString;
-    TextView cartName, txt_title, txt_title_detail, txtOrderId;
+    TextView cartName, txt_title, txt_title_detail, txtOrderId, orderGuest, orderPrice, orderTotal;
     ImageView img_close, popup_event_close;
     //EditText txtEventVenue, txtEventAddress;
     ArrayList<String> packageChosen;
@@ -44,9 +44,10 @@ public class CartActivity extends AppCompatActivity {
     Button btnPlaceOrder, btnDone, btn_event_done;
     Order orders = new Order();
     Dialog successDialog, eventDialog;
-    int eventdateid, orderId;
+    int eventdateid, orderId, guestc, pricec;
+    double total;
     EditText txtEventAddress, txtEventVenue;
-    String listString;
+    String listString, orderguest, orderprice, ordertotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class CartActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             listString = String.join(",", packageChosen);
-            Log.d("username", "cart ko selected packages: "+listString);
+            //Log.d("username", "cart ko selected packages: "+listString);
         }
 
         Typeface face = Typeface.createFromAsset(getAssets(), "font/CaviarDreams.ttf");
@@ -97,7 +98,7 @@ public class CartActivity extends AppCompatActivity {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("USER_ID", MODE_PRIVATE);
         loadedString = prefs.getString("USER_ID", null);
         userId = loadedString;
-        Log.d("username", "cart ko user id woo hoo hooo ooo: " + loadedString);
+        //Log.d("username", "cart ko user id woo hoo hooo ooo: " + loadedString);
 
         //From EventTime activity
         SharedPreferences eventname = getApplicationContext().getSharedPreferences("EVENT_NAME", MODE_PRIVATE);
@@ -107,10 +108,31 @@ public class CartActivity extends AppCompatActivity {
         SharedPreferences eventDateId = getApplicationContext().getSharedPreferences("EVENT_DATE_TIME", MODE_PRIVATE);
         eventdateId = eventDateId.getString("SELECTED_EVENT_TIME", null);
         eventdateid = Integer.valueOf(eventdateId);
-        Log.d("username", "cart activity ko event date ko id : "+eventdateId);
+        //Log.d("username", "cart activity ko event date ko id : "+eventdateId);
 
         SharedPreferences use_token = this.getSharedPreferences("USER_TOKEN", MODE_PRIVATE);
         tok = use_token.getString("USER_TOKEN", null);
+
+        //From EventTime Activity
+        SharedPreferences guest = getApplicationContext().getSharedPreferences("GUEST_COUNT", MODE_PRIVATE);
+        orderguest = guest.getString("GUEST_COUNT", null);
+        guestc = Integer.valueOf(orderguest);
+
+        //From PackageDetails Activity
+        SharedPreferences price = getApplicationContext().getSharedPreferences("ORDER_PRICE", MODE_PRIVATE);
+        orderprice = price.getString("ORDER_PRICE", null);
+        pricec = Integer.valueOf(orderprice);
+
+        total = (double) (guestc * pricec); //total calculation
+        ordertotal = String.valueOf(total);
+
+        orderGuest = findViewById(R.id.orderGuest);
+        orderPrice = findViewById(R.id.orderPrice);
+        orderTotal = findViewById(R.id.orderTotal);
+
+        orderGuest.setText(orderguest);
+        orderPrice.setText(orderprice);
+        orderTotal.setText("Rs. "+ordertotal);
 
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {

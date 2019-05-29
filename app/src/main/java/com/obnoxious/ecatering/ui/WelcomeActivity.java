@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.obnoxious.ecatering.R;
 import com.obnoxious.ecatering.adapters.MyPagerAdapter;
 import com.obnoxious.ecatering.view.EventActivity;
+import com.obnoxious.ecatering.view.LoginActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -129,7 +130,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
     private void startMainActivity(){
         setFirstTimeStartStatus(false);
-        startActivity(new Intent(WelcomeActivity.this, EventActivity.class));
+        startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
         finish();
     }
     private void setStatusBarTransparent(){
