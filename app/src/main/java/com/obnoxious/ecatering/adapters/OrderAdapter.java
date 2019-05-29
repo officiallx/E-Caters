@@ -114,15 +114,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 txtEventTime.setText("");
                 txtEventAddress.setText("");
                 txtEventVenue.setText("");
-                cv_order.setVisibility(View.GONE);
-                Toast.makeText(c, "No Orders! Why dont you order somthing first.", Toast.LENGTH_LONG).show();
+                cv_order.setVisibility(View.INVISIBLE);
+                Toast.makeText(c, "No Orders! Why dont you order something first.", Toast.LENGTH_LONG).show();
             }
 
         }
 
         @Override
         public void onItemClick(int position) {
-            Toast.makeText(c, "Order Clicked", Toast.LENGTH_LONG).show();
+            //Toast.makeText(c, "Order Clicked", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -145,7 +145,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             @Override
             public void onClick(View v) {
                 removeOrder();
-                cv_order.setVisibility(View.GONE);
+                cv_order.setVisibility(View.INVISIBLE);
             }
         });
     }
